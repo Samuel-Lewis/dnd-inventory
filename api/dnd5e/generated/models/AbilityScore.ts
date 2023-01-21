@@ -2,14 +2,15 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { APIReference } from './APIReference';
-import type { ResourceDescription } from './ResourceDescription';
+import type { APIReference } from "./APIReference";
+import type { ResourceDescription } from "./ResourceDescription";
 
 /**
  * `AbilityScore`
  *
  */
-export type AbilityScore = (APIReference & ResourceDescription & {
+export type AbilityScore = APIReference &
+  ResourceDescription & {
     /**
      * Full name of the ability score.
      */
@@ -18,5 +19,4 @@ export type AbilityScore = (APIReference & ResourceDescription & {
      * List of skills that use this ability score.
      */
     skills?: Array<APIReference>;
-});
-
+  };

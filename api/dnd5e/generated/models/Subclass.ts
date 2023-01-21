@@ -2,15 +2,16 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { APIReference } from './APIReference';
-import type { ResourceDescription } from './ResourceDescription';
-import type { SpellPrerequisite } from './SpellPrerequisite';
+import type { APIReference } from "./APIReference";
+import type { ResourceDescription } from "./ResourceDescription";
+import type { SpellPrerequisite } from "./SpellPrerequisite";
 
 /**
  * `Subclass`
  *
  */
-export type Subclass = (APIReference & ResourceDescription & {
+export type Subclass = APIReference &
+  ResourceDescription & {
     class?: APIReference;
     /**
      * Lore-friendly flavor text for a classes respective subclass.
@@ -21,8 +22,7 @@ export type Subclass = (APIReference & ResourceDescription & {
      */
     subclass_levels?: string;
     spells?: Array<{
-        prerequisites?: Array<SpellPrerequisite>;
-        spell?: APIReference;
+      prerequisites?: Array<SpellPrerequisite>;
+      spell?: APIReference;
     }>;
-});
-
+  };

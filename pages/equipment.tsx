@@ -64,7 +64,7 @@ export default EquipmentPage;
 
 export const getServerSideProps: GetServerSideProps<
   EquipmentPageProps
-> = async (context) => {
+> = async () => {
   const referenceList = await CommonService.getApi1({ endpoint: "equipment" });
 
   return {

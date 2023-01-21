@@ -2,15 +2,16 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { APIReference } from './APIReference';
-import type { Cost } from './Cost';
-import type { ResourceDescription } from './ResourceDescription';
+import type { APIReference } from "./APIReference";
+import type { Cost } from "./Cost";
+import type { ResourceDescription } from "./ResourceDescription";
 
 /**
  * `Armor`
  *
  */
-export type Armor = (APIReference & ResourceDescription & {
+export type Armor = APIReference &
+  ResourceDescription & {
     equipment_category?: APIReference;
     /**
      * The category of armor this falls into.
@@ -33,5 +34,4 @@ export type Armor = (APIReference & ResourceDescription & {
      * How much the equipment weighs.
      */
     weight?: number;
-});
-
+  };

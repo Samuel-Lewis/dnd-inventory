@@ -2,17 +2,18 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { APIReference } from './APIReference';
-import type { AreaOfEffect } from './AreaOfEffect';
-import type { DamageAtCharacterLevel } from './DamageAtCharacterLevel';
-import type { DamageAtSlotLevel } from './DamageAtSlotLevel';
-import type { ResourceDescription } from './ResourceDescription';
+import type { APIReference } from "./APIReference";
+import type { AreaOfEffect } from "./AreaOfEffect";
+import type { DamageAtCharacterLevel } from "./DamageAtCharacterLevel";
+import type { DamageAtSlotLevel } from "./DamageAtSlotLevel";
+import type { ResourceDescription } from "./ResourceDescription";
 
 /**
  * `Spell`
  *
  */
-export type Spell = (APIReference & ResourceDescription & {
+export type Spell = APIReference &
+  ResourceDescription & {
     /**
      * List of descriptions for casting the spell at higher levels.
      */
@@ -28,7 +29,7 @@ export type Spell = (APIReference & ResourceDescription & {
      * M: material
      *
      */
-    components?: Array<'V' | 'S' | 'M'>;
+    components?: Array<"V" | "S" | "M">;
     /**
      * Material component for the spell to be cast.
      */
@@ -58,7 +59,7 @@ export type Spell = (APIReference & ResourceDescription & {
      * Attack type of the spell.
      */
     attack_type?: string;
-    damage?: (DamageAtCharacterLevel | DamageAtSlotLevel);
+    damage?: DamageAtCharacterLevel | DamageAtSlotLevel;
     /**
      * Magic school this spell belongs to.
      */
@@ -71,5 +72,4 @@ export type Spell = (APIReference & ResourceDescription & {
      * List of subclasses that have access to the spell.
      */
     subclasses?: Array<APIReference>;
-});
-
+  };

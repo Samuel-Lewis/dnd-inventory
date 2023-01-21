@@ -2,14 +2,15 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { APIReference } from './APIReference';
-import type { ResourceDescription } from './ResourceDescription';
+import type { APIReference } from "./APIReference";
+import type { ResourceDescription } from "./ResourceDescription";
 
 /**
  * `Feature`
  *
  */
-export type Feature = (APIReference & ResourceDescription & {
+export type Feature = APIReference &
+  ResourceDescription & {
     /**
      * The level this feature is gained.
      */
@@ -20,19 +21,22 @@ export type Feature = (APIReference & ResourceDescription & {
     /**
      * The prerequisites for this feature.
      */
-    prerequisites?: Array<({
-        type?: string;
-        level?: number;
-    } | {
-        type?: string;
-        feature?: string;
-    } | {
-        type?: string;
-        spell?: string;
-    })>;
+    prerequisites?: Array<
+      | {
+          type?: string;
+          level?: number;
+        }
+      | {
+          type?: string;
+          feature?: string;
+        }
+      | {
+          type?: string;
+          spell?: string;
+        }
+    >;
     /**
      * Information specific to this feature.
      */
     feature_specific?: any;
-});
-
+  };

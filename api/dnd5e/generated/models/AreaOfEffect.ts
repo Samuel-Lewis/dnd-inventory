@@ -3,7 +3,6 @@
 /* eslint-disable */
 
 export type AreaOfEffect = {
-    size?: number;
-    type?: 'sphere' | 'cone' | 'cylinder' | 'line' | 'cube';
+  size?: number;
+  type?: "sphere" | "cone" | "cylinder" | "line" | "cube";
 };
-

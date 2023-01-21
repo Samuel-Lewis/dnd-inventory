@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "generate:dnd5e": "export OUTPUT_PATH=./api/dnd5e/generated && rm -rf \"${OUTPUT_PATH}\" && openapi --useOptions --useUnionTypes --input http://www.dnd5eapi.co/swagger/openapi.json --output \"${OUTPUT_PATH}\""
+    "prettier:fix": "prettier --write --ignore-unknown .",
+    "generate:dnd5e": "export OUTPUT_PATH=./api/dnd5e/generated && rm -rf \"${OUTPUT_PATH}\" && openapi --useOptions --useUnionTypes --input http://www.dnd5eapi.co/swagger/openapi.json --output \"${OUTPUT_PATH}\" && pnpm prettier:fix"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",

@@ -2,14 +2,14 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { APIReference } from './APIReference';
-import type { ResourceDescription } from './ResourceDescription';
+import type { APIReference } from "./APIReference";
+import type { ResourceDescription } from "./ResourceDescription";
 
 /**
  * `Skill`
  *
  */
-export type Skill = (APIReference & ResourceDescription & {
+export type Skill = APIReference &
+  ResourceDescription & {
     ability_score?: APIReference;
-});
-
+  };

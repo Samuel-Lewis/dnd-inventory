@@ -3,9 +3,8 @@
 /* eslint-disable */
 
 export type ResourceDescription = {
-    /**
-     * Description of the resource.
-     */
-    desc?: Array<string>;
+  /**
+   * Description of the resource.
+   */
+  desc?: Array<string>;
 };
-
