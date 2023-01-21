@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate:dnd5e": "export OUTPUT_PATH=./api/dnd5e/generated && rm -rf \"${OUTPUT_PATH}\" && openapi --useOptions --useUnionTypes --input http://www.dnd5eapi.co/swagger/openapi.json --output \"${OUTPUT_PATH}\""
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
@@ -16,6 +17,7 @@
     "@mantine/hooks": "^5.10.1",
     "@mantine/modals": "^5.10.1",
     "@mantine/next": "^5.10.1",
+    "@mantine/nprogress": "^5.10.1",
     "@mantine/spotlight": "^5.10.1",
     "@mantine/tiptap": "^5.10.1",
     "@next/font": "13.1.3",
@@ -30,6 +32,7 @@
     "eslint": "8.32.0",
     "eslint-config-next": "13.1.3",
     "firebase": "^9.16.0",
+    "fuse.js": "^6.6.2",
     "next": "13.1.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -39,6 +42,7 @@
   "devDependencies": {
     "eslint-config-samuel-lewis": "^0.0.5",
     "husky": "^8.0.3",
+    "openapi-typescript-codegen": "^0.23.0",
     "prettier": "^2.8.3"
   }
 }
