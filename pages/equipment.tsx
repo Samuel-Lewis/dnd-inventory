@@ -2,7 +2,7 @@ import Fuse from "fuse.js";
 import { GetServerSideProps } from "next";
 import React, { useMemo, useState } from "react";
 
-import { APIReferenceList, CommonService } from "@/api/dnd5e/generated";
+import { APIReferenceList, CommonService } from "@/lib/api/dnd5e/generated";
 import { TextInput, Text, List } from "@mantine/core";
 
 type EquipmentPageProps = {

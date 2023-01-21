@@ -3,5 +3,6 @@ export type Item = {
   quantity: number;
   weight: number;
   description: string;
+  value: number;
   srdRef: string;
 };
