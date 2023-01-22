@@ -3,7 +3,6 @@ import React from "react";
 import { Paper, Title } from "@mantine/core";
 
 const LogoutPage: React.FC = () => {
-  console.log("logout");
   return (
     <div>
       <h1>LogoutPage</h1>

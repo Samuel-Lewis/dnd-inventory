@@ -3,7 +3,6 @@ import React from "react";
 import { Paper, Title } from "@mantine/core";
 
 const InventoryCreatePage: React.FC = () => {
-  console.log("inventory create id");
   return (
     <div>
       <h1>InventoryCreatePage</h1>

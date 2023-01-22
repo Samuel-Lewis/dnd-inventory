@@ -11,7 +11,6 @@ export default function IndexPage() {
     if (!localUser) {
       return;
     }
-    console.log("click");
 
     const sword = await itemConnection.create({
       name: "Sword",

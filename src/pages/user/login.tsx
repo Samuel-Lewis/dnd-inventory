@@ -3,7 +3,6 @@ import React from "react";
 import { Paper, Title } from "@mantine/core";
 
 const LoginPage: React.FC = () => {
-  console.log("login");
   return (
     <div>
       <h1>LoginPage</h1>

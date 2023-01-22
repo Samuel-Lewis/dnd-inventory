@@ -3,7 +3,6 @@ import React from "react";
 import { Paper, Title } from "@mantine/core";
 
 const ItemCreatePage: React.FC = () => {
-  console.log("item create id");
   return (
     <div>
       <h1>ItemCreatePage</h1>
