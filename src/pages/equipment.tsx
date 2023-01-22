@@ -2,8 +2,9 @@ import Fuse from "fuse.js";
 import { GetServerSideProps } from "next";
 import React, { useMemo, useState } from "react";
 
-import { APIReferenceList, CommonService } from "@/lib/api/dnd5e/generated";
 import { TextInput, Text, List } from "@mantine/core";
+
+import { APIReferenceList, CommonService } from "~/api/dnd5e/generated";
 
 type EquipmentPageProps = {
   referenceList: APIReferenceList;
@@ -45,14 +46,9 @@ const EquipmentPage: React.FC<EquipmentPageProps> = ({ referenceList }) => {
         onChange={(event) => setSearchValue(event.currentTarget.value)}
       />
       <List withPadding>
-        {searchList.map(({ item, score }) => (
+        {searchList.map(({ item }) => (
           <List.Item key={item.index}>
-            <Text>
-              {item.name ?? item.index}{" "}
-              <Text c="dimmed" inherit span>
-                | {score}
-              </Text>
-            </Text>
+            <Text>{item.name ?? item.index} </Text>
           </List.Item>
         ))}
       </List>

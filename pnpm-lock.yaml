@@ -32,8 +32,10 @@ specifiers:
   prettier: ^2.8.3
   react: 18.2.0
   react-dom: 18.2.0
+  react-firebase-hooks: ^5.1.1
   react-query: ^3.39.2
   typescript: 4.9.4
+  zustand: ^4.3.2
 
 dependencies:
   '@emotion/react': 11.10.5_3stiutgnnbnfnf3uowm5cip22i
@@ -59,8 +61,10 @@ dependencies:
   next: 13.1.3_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
+  react-firebase-hooks: 5.1.1_abvzjdaomagc74djuogmzkuluq
   react-query: 3.39.2_biqbaboplfbrettd7655fr4n2y
   typescript: 4.9.4
+  zustand: 4.3.2_react@18.2.0
 
 devDependencies:
   '@types/node': 18.11.18
@@ -3899,6 +3903,16 @@ packages:
       scheduler: 0.23.0
     dev: false
 
+  /react-firebase-hooks/5.1.1_abvzjdaomagc74djuogmzkuluq:
+    resolution: {integrity: sha512-y2UpWs82xs+39q5Rc/wq316ca52QsC0n8m801V+yM4IC4hbfOL4yQPVSh7w+ydstdvjN9F+lvs1WrO2VYxpmdA==}
+    peerDependencies:
+      firebase: '>= 9.0.0'
+      react: '>= 16.8.0'
+    dependencies:
+      firebase: 9.16.0
+      react: 18.2.0
+    dev: false
+
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
@@ -4455,6 +4469,14 @@ packages:
       use-isomorphic-layout-effect: 1.1.2_3stiutgnnbnfnf3uowm5cip22i
     dev: false
 
+  /use-sync-external-store/1.2.0_react@18.2.0:
+    resolution: {integrity: sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+    dev: false
+
   /util-deprecate/1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
     dev: false
@@ -4593,3 +4615,19 @@ packages:
   /yocto-queue/0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+
+  /zustand/4.3.2_react@18.2.0:
+    resolution: {integrity: sha512-rd4haDmlwMTVWVqwvgy00ny8rtti/klRoZjFbL/MAcDnmD5qSw/RZc+Vddstdv90M5Lv6RPgWvm1Hivyn0QgJw==}
+    engines: {node: '>=12.7.0'}
+    peerDependencies:
+      immer: '>=9.0'
+      react: '>=16.8'
+    peerDependenciesMeta:
+      immer:
+        optional: true
+      react:
+        optional: true
+    dependencies:
+      react: 18.2.0
+      use-sync-external-store: 1.2.0_react@18.2.0
+    dev: false
