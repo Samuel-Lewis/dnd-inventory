@@ -48,6 +48,18 @@ export class FirestoreConnection<T extends WithFieldValue<DocumentData>> {
     });
   }
 
+  public async getDoc(key: string) {
+    const docRef = doc(this.fs, this.tableKey, key).withConverter(
+      this.converter
+    );
+
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return { ref: docRef, snap: docSnap, data: docSnap.data() };
+    }
+    return null;
+  }
+
   public async getOrCreateDoc(key: string, defaultValue: T) {
     const docRef = doc(this.fs, this.tableKey, key).withConverter(
       this.converter

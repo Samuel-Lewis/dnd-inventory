@@ -49,6 +49,12 @@ const data = [
   { link: "/item", label: "Items", Icon: IconShield },
 ];
 
+/** TODO
+ * scroll bar is on outside of scroll area
+ * mobile: logout button is not showing
+ * mobile: navbar scroll area is not working
+ */
+
 export const GlobalNav: React.FC<GlobalNavProps> = ({ navOpen }) => {
   const { classes } = useStyles();
   const theme = useMantineTheme();

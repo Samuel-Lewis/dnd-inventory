@@ -16,7 +16,7 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = ({
   toggleNavOpened,
   navOpen,
 }) => {
-  const [user, loading, error] = useAuthState(firebase.auth);
+  const [_user, loading, _error] = useAuthState(firebase.auth);
 
   return (
     <Header height={60} p="sm">
