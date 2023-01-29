@@ -39,3 +39,5 @@ jobs:
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_DND_INVENTORY_70A1B }}"
           channelId: live
           projectId: dnd-inventory-70a1b
+        env:
+          FIREBASE_CLI_EXPERIMENTS: webframeworks
