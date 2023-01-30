@@ -2,3 +2,7 @@ node_modules
 .next
 .vscode
 pnpm-lock.yaml
+.firebase
+.firebase-debug.log
+firebase.json
+firebaseFunctions.js
