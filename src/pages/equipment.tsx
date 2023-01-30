@@ -1,10 +1,9 @@
 import Fuse from "fuse.js";
-import { GetServerSideProps } from "next";
 import React, { useMemo, useState } from "react";
 
 import { TextInput, Text, List } from "@mantine/core";
 
-import { APIReferenceList, CommonService } from "~/api/dnd5e/generated";
+import { APIReferenceList } from "~/api/dnd5e/generated";
 
 type EquipmentPageProps = {
   referenceList: APIReferenceList;
@@ -18,7 +17,9 @@ const fuseOptions = {
   keys: ["name", "index"],
 };
 
-const EquipmentPage: React.FC<EquipmentPageProps> = ({ referenceList }) => {
+const EquipmentPage: React.FC<EquipmentPageProps> = ({
+  referenceList = {},
+}) => {
   const [searchValue, setSearchValue] = useState("");
   const fuse = useMemo(
     () => new Fuse(referenceList.results || [], fuseOptions),
@@ -57,13 +58,3 @@ const EquipmentPage: React.FC<EquipmentPageProps> = ({ referenceList }) => {
 };
 
 export default EquipmentPage;
-
-export const getServerSideProps: GetServerSideProps<
-  EquipmentPageProps
-> = async () => {
-  const referenceList = await CommonService.getApi1({ endpoint: "equipment" });
-
-  return {
-    props: { referenceList }, // will be passed to the page component as props
-  };
-};

@@ -1,6 +1,5 @@
-import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { Paper, Title } from "@mantine/core";
 
@@ -12,9 +11,23 @@ interface InventoryIdPageProps {
   inventory?: ConnectionReturn<Inventory>;
 }
 
-const InventoryIdPage: React.FC<InventoryIdPageProps> = ({ inventory }) => {
+const InventoryIdPage: React.FC<InventoryIdPageProps> = () => {
   const router = useRouter();
   const { id } = router.query;
+
+  const [inventory, setInventory] = useState<
+    ConnectionReturn<Inventory> | undefined
+  >();
+
+  useEffect(() => {
+    if (typeof id !== "string") {
+      return;
+    }
+
+    inventoryConnection.getDoc(id).then((inventory) => {
+      setInventory(inventory ?? undefined);
+    });
+  });
 
   if (!inventory) {
     return <div>Not found</div>;
@@ -36,21 +49,3 @@ const InventoryIdPage: React.FC<InventoryIdPageProps> = ({ inventory }) => {
 };
 
 export default InventoryIdPage;
-
-export const getServerSideProps: GetServerSideProps<
-  InventoryIdPageProps
-> = async (context) => {
-  const { id } = context.query;
-
-  if (typeof id !== "string") {
-    return { props: {} };
-  }
-
-  const inventory = await inventoryConnection.getDoc(id);
-
-  return {
-    props: {
-      inventory: inventory ?? undefined,
-    },
-  };
-};
