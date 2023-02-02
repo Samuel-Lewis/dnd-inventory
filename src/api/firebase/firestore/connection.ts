@@ -9,14 +9,17 @@ import {
   FirestoreDataConverter,
   getDoc,
   QueryDocumentSnapshot,
+  serverTimestamp,
   setDoc,
   UpdateData,
   updateDoc,
   WithFieldValue,
 } from "firebase/firestore";
 
+import { DocMeta } from "../models/Meta";
+
 export const converter = <
-  T extends WithFieldValue<DocumentData>
+  T extends WithFieldValue<DocumentData & DocMeta>
 >(): FirestoreDataConverter<T> => ({
   toFirestore: (data: WithFieldValue<T>) => data,
   fromFirestore: (snap: QueryDocumentSnapshot) => snap.data() as T,
@@ -27,12 +30,14 @@ const nonNull = <T>(value: T | null | undefined): value is T => {
 };
 
 export type ConnectionReturn<T> = {
-  ref: DocumentReference;
+  ref: DocumentReference<T>;
   snap: QueryDocumentSnapshot<T>;
   data: T;
 };
 
-export class FirestoreConnection<T extends WithFieldValue<DocumentData>> {
+export class FirestoreConnection<
+  T extends WithFieldValue<DocumentData & DocMeta>
+> {
   protected collectionRef: CollectionReference<T>;
   protected converter = converter<T>();
 
@@ -42,13 +47,24 @@ export class FirestoreConnection<T extends WithFieldValue<DocumentData>> {
     );
   }
 
-  public create(item: T) {
-    return addDoc(this.collectionRef, {
-      ...item,
-    });
+  public create(item: T): Promise<DocumentReference<T>> {
+    const meta: DocMeta = {
+      meta: {
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+      },
+    };
+    return addDoc<T>(this.collectionRef, { ...item, ...meta });
   }
 
-  public async getDoc(key: string) {
+  public getDoc(key?: string) {
+    if (!key) {
+      return null;
+    }
+    return doc(this.fs, this.tableKey, key).withConverter(this.converter);
+  }
+
+  public async getDocValue(key: string): Promise<ConnectionReturn<T> | null> {
     const docRef = doc(this.fs, this.tableKey, key).withConverter(
       this.converter
     );
@@ -73,14 +89,15 @@ export class FirestoreConnection<T extends WithFieldValue<DocumentData>> {
   }
 
   public async updateDoc(key: string, item: UpdateData<T>) {
+    const nowTimestamp = serverTimestamp();
     const docRef = doc(this.fs, this.tableKey, key).withConverter(
       this.converter
     );
-    await updateDoc(docRef, item);
+    await updateDoc(docRef, { ...item, "meta.updatedAt": nowTimestamp });
   }
 
   public async hydrateRef(
-    ref: DocumentReference
+    ref: DocumentReference<T>
   ): Promise<ConnectionReturn<T> | null> {
     const docSnap = await getDoc(ref.withConverter(this.converter));
     if (docSnap.exists()) {
@@ -90,7 +107,7 @@ export class FirestoreConnection<T extends WithFieldValue<DocumentData>> {
   }
 
   public async hydrateRefs(
-    refs: DocumentReference[]
+    refs: DocumentReference<T>[]
   ): Promise<ConnectionReturn<T>[]> {
     const r = refs.map((ref) => this.hydrateRef(ref));
     return (await Promise.all(r)).filter(nonNull);

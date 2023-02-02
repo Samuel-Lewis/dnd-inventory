@@ -1,4 +1,5 @@
 import { signInAnonymously } from "firebase/auth";
+import { serverTimestamp } from "firebase/firestore";
 import { AppProps } from "next/app";
 import Head from "next/head";
 import { useEffect } from "react";
@@ -9,26 +10,21 @@ import { firebase } from "~/api/firebase";
 import { userConnection } from "~/api/firebase/firestore/user";
 import { Layout } from "~/components/Layout";
 import { RouterTransition } from "~/components/RouterTransition";
-import { useLocalUserStore } from "~/context/localUserStore";
 
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
-  const localUserStore = useLocalUserStore();
 
   useEffect(() => {
-    const signIn = async () => {
-      const auth = await signInAnonymously(firebase.auth);
-      const { ref: userRef } = await userConnection.getOrCreateDoc(
-        auth.user.uid,
-        {
-          name: "Anonymous",
-        }
-      );
-      localUserStore.setUser(userRef);
-    };
-    // Sign in anonymously
-    signIn();
-  }, [localUserStore]);
+    signInAnonymously(firebase.auth).then((auth) =>
+      userConnection.getOrCreateDoc(auth.user.uid, {
+        name: "Anonymous",
+        meta: {
+          createdAt: serverTimestamp(),
+          updatedAt: serverTimestamp(),
+        },
+      })
+    );
+  }, []);
 
   return (
     <>

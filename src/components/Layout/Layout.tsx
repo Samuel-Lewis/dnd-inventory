@@ -1,7 +1,7 @@
 import React from "react";
 
-import { AppShell, useMantineTheme } from "@mantine/core";
-import { useDisclosure, useMediaQuery } from "@mantine/hooks";
+import { AppShell } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
 
 // import { GlobalFooter } from "./GlobalFooter";
 import { GlobalHeader } from "./GlobalHeader";
@@ -13,14 +13,6 @@ export interface LayoutProps {
 
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [navOpen, navHandlers] = useDisclosure(false);
-  const theme = useMantineTheme();
-  const smallLayout = useMediaQuery(
-    `(max-width: ${theme.breakpoints.sm}px)`,
-    true,
-    {
-      getInitialValueInEffect: false,
-    }
-  );
 
   return (
     <AppShell

@@ -1,13 +1,12 @@
 import React from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
 
 import { Paper, Stack, Title } from "@mantine/core";
 import { DebugPanel } from "@samuel-lewis/components";
 
-import { firebase } from "~/api/firebase";
+import { useLocalUser } from "~/hooks/useLocalUser";
 
 const UserPage: React.FC = () => {
-  const [user, _, error] = useAuthState(firebase.auth);
+  const { localUser, authError, userError } = useLocalUser();
 
   return (
     <Stack>
@@ -23,10 +22,13 @@ const UserPage: React.FC = () => {
       </Paper>
 
       <DebugPanel title="User Auth" debugMode>
-        <pre>{JSON.stringify(user, null, 2)}</pre>
+        <pre>{JSON.stringify(localUser, null, 2)}</pre>
       </DebugPanel>
-      <DebugPanel title="Auth Error" isError={!!error} debugMode>
-        {!!error && <pre>{JSON.stringify(error, null, 2)}</pre>}
+      <DebugPanel title="Auth Error" isError={!!authError} debugMode>
+        {!!authError && <pre>{JSON.stringify(authError, null, 2)}</pre>}
+      </DebugPanel>
+      <DebugPanel title="Auth Error" isError={!!userError} debugMode>
+        {!!userError && <pre>{JSON.stringify(userError, null, 2)}</pre>}
       </DebugPanel>
     </Stack>
   );

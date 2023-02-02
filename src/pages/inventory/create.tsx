@@ -1,11 +1,94 @@
-import React from "react";
+import { serverTimestamp } from "firebase/firestore";
+import { useRouter } from "next/router";
+import React, { useCallback, useState } from "react";
+import { z } from "zod";
 
-import { Paper, Title } from "@mantine/core";
+import { Button, Paper, Stack, TextInput, Title } from "@mantine/core";
+import { useForm, zodResolver } from "@mantine/form";
+
+import { inventoryConnection } from "~/api/firebase/firestore/inventory";
+import { itemConnection } from "~/api/firebase/firestore/item";
+import { useLocalUser } from "~/hooks/useLocalUser";
+
+const schema = z.object({
+  name: z.string(),
+  description: z.string().optional(),
+});
 
 const InventoryCreatePage: React.FC = () => {
+  const { isError, isLoading, localUser } = useLocalUser();
+  const [formSubmitting, setFormSubmitting] = useState(false);
+  const router = useRouter();
+
+  const form = useForm({
+    validate: zodResolver(schema),
+    initialValues: {
+      name: "",
+      description: "",
+    },
+  });
+  type FormValues = typeof form.values;
+
+  const handleFormSubmit = useCallback(
+    async (values: FormValues) => {
+      if (isError || isLoading || !localUser) {
+        return;
+      }
+      setFormSubmitting(true);
+      const sword = await itemConnection.create({
+        name: "Sword",
+        weight: 0,
+        description: "A sword",
+        value: 10,
+        owner: localUser.ref,
+        srdRefSlug: "longsword",
+        visibility: "public",
+        meta: {
+          createdAt: serverTimestamp(),
+          updatedAt: serverTimestamp(),
+        },
+      });
+
+      inventoryConnection
+        .create({
+          ...values,
+          items: [{ ref: sword, quantity: 1 }],
+          owner: localUser.ref,
+          members: [localUser.ref],
+          meta: {
+            createdAt: serverTimestamp(),
+            updatedAt: serverTimestamp(),
+          },
+        })
+        .then((doc) => router.push(`/inventory/${doc.id}`))
+        .finally(() => setFormSubmitting(false));
+    },
+    [isError, isLoading, localUser, router]
+  );
+
   return (
     <div>
       <h1>InventoryCreatePage</h1>
+      <form onSubmit={form.onSubmit(handleFormSubmit)}>
+        <Stack>
+          <TextInput
+            disabled={formSubmitting}
+            label="Inventory name"
+            description="Can be changed later"
+            required
+            {...form.getInputProps("name")}
+          />
+          <TextInput
+            disabled={formSubmitting}
+            label="Description"
+            {...form.getInputProps("description")}
+          />
+
+          <Button loading={formSubmitting} type="submit">
+            Submit
+          </Button>
+        </Stack>
+      </form>
       <Paper withBorder p="sm">
         <Title order={3}>TODO</Title>
         <ul>

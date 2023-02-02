@@ -24,7 +24,7 @@ const InventoryIdPage: React.FC<InventoryIdPageProps> = () => {
       return;
     }
 
-    inventoryConnection.getDoc(id).then((inventory) => {
+    inventoryConnection.getDocValue(id).then((inventory) => {
       setInventory(inventory ?? undefined);
     });
   });

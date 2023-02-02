@@ -1,11 +1,10 @@
 import Link from "next/link";
 import React from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
 
 import { Avatar, Group, Header, Skeleton, Burger } from "@mantine/core";
 import { ThemeToggle } from "@samuel-lewis/components";
 
-import { firebase } from "~/api/firebase";
+import { useLocalUser } from "~/hooks/useLocalUser";
 
 export interface GlobalHeaderProps {
   toggleNavOpened: () => void;
@@ -16,7 +15,7 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = ({
   toggleNavOpened,
   navOpen,
 }) => {
-  const [_user, loading, _error] = useAuthState(firebase.auth);
+  const { isLoading } = useLocalUser();
 
   return (
     <Header height={60} p="sm">
@@ -25,7 +24,7 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = ({
 
         <Group>
           <ThemeToggle />
-          <Skeleton height={40} circle visible={loading}>
+          <Skeleton height={40} circle visible={isLoading}>
             <Avatar component={Link} href="/user" radius="xl" />
           </Skeleton>
         </Group>
