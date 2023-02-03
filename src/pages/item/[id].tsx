@@ -1,12 +1,49 @@
+import { useRouter } from "next/router";
 import React from "react";
+import { useDocument } from "react-firebase-hooks/firestore";
 
-import { Paper, Title } from "@mantine/core";
+import { Center, Loader, Stack, Title, Text } from "@mantine/core";
+
+import { itemConnection } from "~/api/firebase/firestore/item";
+import { Value } from "~/components/Value";
 
 const ItemIdPage: React.FC = () => {
+  const router = useRouter();
+  const { id } = router.query;
+  const [item, itemLoading, itemError] = useDocument(
+    itemConnection.getDoc(id as string)
+  );
+  if (typeof id !== "string") {
+    console.error("id is not a string", id);
+    return null;
+  }
+
+  const data = item?.data();
+  if (!data) {
+    return null;
+  }
+
   return (
-    <div>
-      <h1>ItemIdPage</h1>
-      <Paper withBorder p="sm">
+    <Stack>
+      <Title>{data.name ?? "Loading"}</Title>
+      {itemError && <Text>{itemError.message}</Text>}
+      {itemLoading && (
+        <Center>
+          <Loader />
+        </Center>
+      )}
+
+      {data && (
+        <>
+          <Value value={data.value} />
+          <Text> {data.weight && `${data.weight} lbs`}</Text>
+          <Text>{data.rarity && `${data.rarity} rarity`}</Text>
+
+          <Text>{data.description}</Text>
+        </>
+      )}
+
+      {/* <Paper withBorder p="sm">
         <Title order={3}>TODO</Title>
         <ul>
           <li>
@@ -22,8 +59,8 @@ const ItemIdPage: React.FC = () => {
           </li>
           <li>Owner: Edit fields</li>
         </ul>
-      </Paper>
-    </div>
+      </Paper> */}
+    </Stack>
   );
 };
 

@@ -1,5 +1,7 @@
 import { DocumentReference } from "firebase/firestore";
 
+import { itemCategories } from "../category";
+
 import { SeriesRef } from "./Series";
 import { UserRef } from "./User";
 
@@ -15,7 +17,10 @@ export type Rarity =
   | "legendary"
   | "artifact";
 
+type ItemCategory = keyof typeof itemCategories;
+
 export interface Item {
+  category: ItemCategory;
   name: string;
   owner: UserRef;
   visibility: "public" | "protected" | "private";
