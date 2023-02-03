@@ -1,8 +1,6 @@
-import { FieldValue } from "firebase/firestore";
+import { FieldValue, Timestamp } from "firebase/firestore";
 
 export type DocMeta = {
-  meta: {
-    createdAt: FieldValue;
-    updatedAt: FieldValue;
-  };
+  createdAt: Timestamp;
+  updatedAt: FieldValue;
 };

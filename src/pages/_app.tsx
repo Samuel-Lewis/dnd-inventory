@@ -1,5 +1,4 @@
 import { signInAnonymously } from "firebase/auth";
-import { serverTimestamp } from "firebase/firestore";
 import { AppProps } from "next/app";
 import Head from "next/head";
 import { useEffect } from "react";
@@ -18,10 +17,6 @@ export default function App(props: AppProps) {
     signInAnonymously(firebase.auth).then((auth) =>
       userConnection.getOrCreateDoc(auth.user.uid, {
         name: "Anonymous",
-        meta: {
-          createdAt: serverTimestamp(),
-          updatedAt: serverTimestamp(),
-        },
       })
     );
   }, []);

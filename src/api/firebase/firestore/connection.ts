@@ -9,17 +9,17 @@ import {
   FirestoreDataConverter,
   getDoc,
   QueryDocumentSnapshot,
-  serverTimestamp,
   setDoc,
   UpdateData,
   updateDoc,
   WithFieldValue,
 } from "firebase/firestore";
 
+import { newMeta } from "../meta";
 import { DocMeta } from "../models/Meta";
 
 export const converter = <
-  T extends WithFieldValue<DocumentData & DocMeta>
+  T extends WithFieldValue<DocumentData>
 >(): FirestoreDataConverter<T> => ({
   toFirestore: (data: WithFieldValue<T>) => data,
   fromFirestore: (snap: QueryDocumentSnapshot) => snap.data() as T,
@@ -35,11 +35,9 @@ export type ConnectionReturn<T> = {
   data: T;
 };
 
-export class FirestoreConnection<
-  T extends WithFieldValue<DocumentData & DocMeta>
-> {
-  protected collectionRef: CollectionReference<T>;
-  protected converter = converter<T>();
+export class FirestoreConnection<T extends WithFieldValue<DocumentData>> {
+  protected collectionRef: CollectionReference<T & DocMeta>;
+  protected converter = converter<T & DocMeta>();
 
   constructor(protected fs: Firestore, protected tableKey: string) {
     this.collectionRef = collection(this.fs, this.tableKey).withConverter(
@@ -47,14 +45,8 @@ export class FirestoreConnection<
     );
   }
 
-  public create(item: T): Promise<DocumentReference<T>> {
-    const meta: DocMeta = {
-      meta: {
-        createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp(),
-      },
-    };
-    return addDoc<T>(this.collectionRef, { ...item, ...meta });
+  public create(item: T) {
+    return addDoc(this.collectionRef, { ...item, ...newMeta() });
   }
 
   public getDoc(key?: string) {
@@ -89,16 +81,13 @@ export class FirestoreConnection<
   }
 
   public async updateDoc(key: string, item: UpdateData<T>) {
-    const nowTimestamp = serverTimestamp();
     const docRef = doc(this.fs, this.tableKey, key).withConverter(
       this.converter
     );
-    await updateDoc(docRef, { ...item, "meta.updatedAt": nowTimestamp });
+    await updateDoc(docRef, item);
   }
 
-  public async hydrateRef(
-    ref: DocumentReference<T>
-  ): Promise<ConnectionReturn<T> | null> {
+  public async hydrateRef(ref: DocumentReference<T>) {
     const docSnap = await getDoc(ref.withConverter(this.converter));
     if (docSnap.exists()) {
       return { ref, snap: docSnap, data: docSnap.data() };
@@ -106,9 +95,7 @@ export class FirestoreConnection<
     return null;
   }
 
-  public async hydrateRefs(
-    refs: DocumentReference<T>[]
-  ): Promise<ConnectionReturn<T>[]> {
+  public async hydrateRefs(refs: DocumentReference<T>[]) {
     const r = refs.map((ref) => this.hydrateRef(ref));
     return (await Promise.all(r)).filter(nonNull);
   }

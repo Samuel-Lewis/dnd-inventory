@@ -4,7 +4,7 @@ import { firebase } from "..";
 import { Inventory } from "../models/Inventory";
 import { UserRef } from "../models/User";
 
-import { ConnectionReturn, FirestoreConnection } from "./connection";
+import { FirestoreConnection } from "./connection";
 
 class InventoryConnection extends FirestoreConnection<Inventory> {
   public ownedInventoriesQuery = (localUserIdRef?: UserRef | null) => {
@@ -15,7 +15,6 @@ class InventoryConnection extends FirestoreConnection<Inventory> {
   };
 }
 
-export type InventoryConnectionReturnType = ConnectionReturn<Inventory>;
 export const inventoryConnection = new InventoryConnection(
   firebase.firestore,
   "inventory"

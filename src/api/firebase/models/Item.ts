@@ -1,19 +1,28 @@
 import { DocumentReference } from "firebase/firestore";
 
-import { DocMeta } from "./Meta";
-import { SeriesKey } from "./Series";
+import { SeriesRef } from "./Series";
 import { UserRef } from "./User";
 
 export type ItemKey = string;
 export type ItemRef = DocumentReference<Item>;
 
-export interface Item extends DocMeta {
+export type Rarity =
+  | "varies"
+  | "common"
+  | "uncommon"
+  | "rare"
+  | "very rare"
+  | "legendary"
+  | "artifact";
+
+export interface Item {
   name: string;
-  weight: number;
-  description: string;
-  value: number;
-  srdRefSlug: string;
   owner: UserRef;
-  series?: SeriesKey;
   visibility: "public" | "protected" | "private";
+  description?: string;
+  weight?: number;
+  value?: number;
+  srdRefSlug?: string;
+  series?: SeriesRef;
+  rarity?: Rarity;
 }
