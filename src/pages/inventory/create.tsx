@@ -1,4 +1,3 @@
-import { serverTimestamp } from "firebase/firestore";
 import { useRouter } from "next/router";
 import React, { useCallback, useState } from "react";
 import { z } from "zod";
@@ -39,14 +38,11 @@ const InventoryCreatePage: React.FC = () => {
         name: "Sword",
         weight: 0,
         description: "A sword",
+        category: "martial-melee-weapons",
         value: 10,
         owner: localUser.ref,
         srdRefSlug: "longsword",
         visibility: "public",
-        meta: {
-          createdAt: serverTimestamp(),
-          updatedAt: serverTimestamp(),
-        },
       });
 
       inventoryConnection
@@ -55,10 +51,6 @@ const InventoryCreatePage: React.FC = () => {
           items: [{ ref: sword, quantity: 1 }],
           owner: localUser.ref,
           members: [localUser.ref],
-          meta: {
-            createdAt: serverTimestamp(),
-            updatedAt: serverTimestamp(),
-          },
         })
         .then((doc) => router.push(`/inventory/${doc.id}`))
         .finally(() => setFormSubmitting(false));

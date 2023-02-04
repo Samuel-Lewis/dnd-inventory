@@ -1,8 +1,4 @@
-export type CategoryAttributes = {
-  name: string;
-};
-
-export const itemCategories: Record<string, CategoryAttributes> = {
+export const itemCategories = {
   "gems-and-jewelry": { name: "Gems and Jewelry" },
   "adventuring-gear": { name: "Adventuring Gear" },
   ammunition: { name: "Ammunition" },
