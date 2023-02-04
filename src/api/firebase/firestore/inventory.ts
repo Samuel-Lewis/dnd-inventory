@@ -13,6 +13,11 @@ class InventoryConnection extends FirestoreConnection<Inventory> {
     }
     return query(this.collectionRef, where("owner", "==", localUserIdRef));
   };
+
+  public override create(item: Inventory) {
+    const keyHint = item.name;
+    return super.create(item, keyHint);
+  }
 }
 
 export const inventoryConnection = new InventoryConnection(

@@ -18,6 +18,11 @@ class ItemConnection extends FirestoreConnection<Item> {
       where("visibility", "==", "public")
     );
   };
+
+  public override create(item: Item) {
+    const keyHint = item.name;
+    return super.create(item, keyHint);
+  }
 }
 
 export type ItemConnectionReturnType = ConnectionReturn<Item>;

@@ -1,30 +1,40 @@
-import Image from "next/image";
 import React from "react";
 
-import { Group, Text, Tooltip } from "@mantine/core";
+import { Box, createStyles, Group, Text, Tooltip } from "@mantine/core";
 
-import { itemCategories } from "~/api/firebase/category";
 import { ItemCategory } from "~/api/firebase/models/Item";
+import { itemCategories } from "~/lib/category/category";
 
 export interface CategoryProps {
   category: ItemCategory;
   compact?: boolean;
 }
 
-export const Category: React.FC<CategoryProps> = ({ category, compact }) => {
-  const { name } = itemCategories[category];
+const useStyles = createStyles((theme) => ({
+  icon: {
+    path: {
+      fill: theme.colorScheme === "dark" ? theme.white : theme.black,
+    },
+  },
+}));
 
-  const img = (
-    <Image src={`/icons/${category}.svg`} alt="" width={20} height={20} />
-  );
+export const Category: React.FC<CategoryProps> = ({ category, compact }) => {
+  const { name, Icon } = itemCategories[category];
+  const { classes } = useStyles();
 
   if (compact) {
-    return <Tooltip label={name}>{img}</Tooltip>;
+    return (
+      <Tooltip label={name}>
+        <Box>
+          <Icon style={{ height: 20, width: 20 }} className={classes.icon} />
+        </Box>
+      </Tooltip>
+    );
   }
 
   return (
     <Group noWrap spacing="xs">
-      <Image src={`/icons/${category}.svg`} alt="" width={20} height={20} />
+      <Icon style={{ height: 20, width: 20 }} className={classes.icon} />
       <Text sx={{ whiteSpace: "nowrap" }}>{name}</Text>
     </Group>
   );

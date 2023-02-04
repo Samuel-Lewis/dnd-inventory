@@ -52,10 +52,9 @@ export const FancyNavButton: React.FC<FancyNavButtonProps> = ({
       href={link}
       fullWidth
       variant={style}
-      color="blue"
       size="lg"
       p={0}
-      pl={"md"}
+      px="md"
       className={classes.navButton}
     >
       <Group spacing="xs">

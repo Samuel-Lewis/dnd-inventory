@@ -7,6 +7,7 @@ import { ThemeProvider } from "@samuel-lewis/components";
 
 import { firebase } from "~/api/firebase";
 import { userConnection } from "~/api/firebase/firestore/user";
+import { colorsOverride } from "~/components/colors";
 import { Layout } from "~/components/Layout";
 import { RouterTransition } from "~/components/RouterTransition";
 
@@ -32,7 +33,14 @@ export default function App(props: AppProps) {
         />
       </Head>
 
-      <ThemeProvider>
+      <ThemeProvider
+        themeOverride={{
+          colors: colorsOverride,
+          white: "#ede4da",
+          black: "#353540",
+          primaryColor: "red",
+        }}
+      >
         <Layout>
           <RouterTransition />
           <Component {...pageProps} />

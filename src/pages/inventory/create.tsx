@@ -2,11 +2,10 @@ import { useRouter } from "next/router";
 import React, { useCallback, useState } from "react";
 import { z } from "zod";
 
-import { Button, Paper, Stack, TextInput, Title } from "@mantine/core";
+import { Button, Stack, Textarea, TextInput, Title } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 
 import { inventoryConnection } from "~/api/firebase/firestore/inventory";
-import { itemConnection } from "~/api/firebase/firestore/item";
 import { useLocalUser } from "~/hooks/useLocalUser";
 
 const schema = z.object({
@@ -34,21 +33,10 @@ const InventoryCreatePage: React.FC = () => {
         return;
       }
       setFormSubmitting(true);
-      const sword = await itemConnection.create({
-        name: "Sword",
-        weight: 0,
-        description: "A sword",
-        category: "martial-melee-weapons",
-        value: 10,
-        owner: localUser.ref,
-        srdRefSlug: "longsword",
-        visibility: "public",
-      });
-
       inventoryConnection
         .create({
           ...values,
-          items: [{ ref: sword, quantity: 1 }],
+          items: [],
           owner: localUser.ref,
           members: [localUser.ref],
         })
@@ -60,7 +48,7 @@ const InventoryCreatePage: React.FC = () => {
 
   return (
     <div>
-      <h1>InventoryCreatePage</h1>
+      <Title order={2}>Create new inventory</Title>
       <form onSubmit={form.onSubmit(handleFormSubmit)}>
         <Stack>
           <TextInput
@@ -70,7 +58,7 @@ const InventoryCreatePage: React.FC = () => {
             required
             {...form.getInputProps("name")}
           />
-          <TextInput
+          <Textarea
             disabled={formSubmitting}
             label="Description"
             {...form.getInputProps("description")}
@@ -81,14 +69,14 @@ const InventoryCreatePage: React.FC = () => {
           </Button>
         </Stack>
       </form>
-      <Paper withBorder p="sm">
+      {/* <Paper withBorder p="sm">
         <Title order={3}>TODO</Title>
         <ul>
           <li>No perms, redirects to signup?</li>
           <li>Form to create inventory</li>
           <li>Optional to immediately add items</li>
         </ul>
-      </Paper>
+      </Paper> */}
     </div>
   );
 };

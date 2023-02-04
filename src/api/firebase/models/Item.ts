@@ -1,6 +1,6 @@
 import { DocumentReference } from "firebase/firestore";
 
-import { itemCategories } from "../category";
+import { itemCategories } from "~/lib/category/category";
 
 import { SeriesRef } from "./Series";
 import { UserRef } from "./User";

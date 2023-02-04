@@ -13,7 +13,6 @@ import {
   Center,
   Loader,
   TextInput,
-  Group,
   Anchor,
 } from "@mantine/core";
 
@@ -107,7 +106,7 @@ const ItemIndexPage: React.FC = () => {
           <Table className={classes.table}>
             <thead>
               <tr>
-                <th>Name</th>
+                <th colSpan={2}>Name</th>
                 <th>Value</th>
                 <th>Weight</th>
                 <th>Description</th>
@@ -117,14 +116,17 @@ const ItemIndexPage: React.FC = () => {
               {searchList.map((item) => (
                 <tr key={item.id}>
                   <td>
-                    <Group noWrap spacing={4}>
-                      <Category category={item.data().category} compact />
-                      <Link href={`/item/${item.id}`}>
-                        <Anchor sx={{ whiteSpace: "nowrap" }} inherit>
-                          {item.data().name}
-                        </Anchor>
-                      </Link>
-                    </Group>
+                    <Category category={item.data().category} compact />
+                  </td>
+                  <td>
+                    <Anchor
+                      sx={{ whiteSpace: "nowrap" }}
+                      inherit
+                      component={Link}
+                      href={`/item/${item.id}`}
+                    >
+                      {item.data().name}
+                    </Anchor>
                   </td>
                   <td className={classes.centerAlign}>
                     <Value value={item.data().value} />

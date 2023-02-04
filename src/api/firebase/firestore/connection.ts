@@ -15,6 +15,8 @@ import {
   WithFieldValue,
 } from "firebase/firestore";
 
+import { toUniqueSlug } from "@samuel-lewis/utils";
+
 import { newMeta } from "../meta";
 import { DocMeta } from "../models/Meta";
 
@@ -45,7 +47,19 @@ export class FirestoreConnection<T extends WithFieldValue<DocumentData>> {
     );
   }
 
-  public create(item: T) {
+  public async create(item: T, keyHint?: string) {
+    if (keyHint) {
+      const nd = doc(
+        this.fs,
+        this.tableKey,
+        toUniqueSlug(keyHint, { maxLength: 20 })
+      ).withConverter(this.converter);
+      await setDoc(nd, {
+        ...item,
+        ...newMeta(),
+      });
+      return nd;
+    }
     return addDoc(this.collectionRef, { ...item, ...newMeta() });
   }
 
