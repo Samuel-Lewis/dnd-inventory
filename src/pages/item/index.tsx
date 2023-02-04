@@ -13,12 +13,16 @@ import {
   Center,
   Loader,
   TextInput,
+  Group,
+  Anchor,
 } from "@mantine/core";
 
 import { itemConnection } from "~/api/firebase/firestore/item";
 import { Item } from "~/api/firebase/models/Item";
 import { DocMeta } from "~/api/firebase/models/Meta";
+import { Category } from "~/components/Category";
 import { Value } from "~/components/Value";
+import { Weight } from "~/components/Weight";
 import { useLocalUser } from "~/hooks/useLocalUser";
 
 const fuseOptions = {
@@ -113,19 +117,20 @@ const ItemIndexPage: React.FC = () => {
               {searchList.map((item) => (
                 <tr key={item.id}>
                   <td>
-                    <Link href={`/item/${item.id}`}>
-                      <Text sx={{ whiteSpace: "nowrap" }}>
-                        {item.data().name}
-                      </Text>
-                    </Link>
+                    <Group noWrap spacing={4}>
+                      <Category category={item.data().category} compact />
+                      <Link href={`/item/${item.id}`}>
+                        <Anchor sx={{ whiteSpace: "nowrap" }} inherit>
+                          {item.data().name}
+                        </Anchor>
+                      </Link>
+                    </Group>
                   </td>
                   <td className={classes.centerAlign}>
                     <Value value={item.data().value} />
                   </td>
                   <td className={classes.centerAlign}>
-                    {(item.data().weight ?? 0) > 0
-                      ? `${item.data().weight} lbs`
-                      : "-"}
+                    <Weight weight={item.data().weight} />
                   </td>
                   <td>
                     <Text lineClamp={2}>{item.data().description}</Text>

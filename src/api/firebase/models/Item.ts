@@ -17,7 +17,7 @@ export type Rarity =
   | "legendary"
   | "artifact";
 
-type ItemCategory = keyof typeof itemCategories;
+export type ItemCategory = keyof typeof itemCategories;
 
 export interface Item {
   category: ItemCategory;
