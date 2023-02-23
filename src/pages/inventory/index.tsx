@@ -12,28 +12,27 @@ const InventoryIndexPage: React.FC = () => {
   const { localUser } = useLocalUser();
 
   const [inventories] = useCollection(
-    inventoryConnection.ownedInventoriesQuery(localUser?.ref),
-    {
-      snapshotListenOptions: { includeMetadataChanges: true },
-    }
+    inventoryConnection.ownedInventoriesQuery(localUser?.ref)
   );
 
   return (
-    <div>
-      {/* isLoading: {isLoading.toString()} */}
-      <br />
-      {/* isError: {isError.toString()} */}
+    <>
       <Table>
         <thead>
           <tr>
             <th>Name</th>
             <th>Description</th>
-            <th>Items Count</th>
+            <th>Total Items</th>
+            <th>Unique Items</th>
             <th>Owner</th>
             <th>Members</th>
           </tr>
         </thead>
         {inventories?.docs.map((inventory) => {
+          const totalItems = inventory
+            .data()
+            .items.reduce((acc, item) => acc + item.quantity, 0);
+
           return (
             <tr key={inventory.id}>
               <td>
@@ -42,6 +41,7 @@ const InventoryIndexPage: React.FC = () => {
                 </Link>
               </td>
               <td>{inventory.data().description}</td>
+              <td>{totalItems}</td>
               <td>{inventory.data().items.length}</td>
               <td>{/* inventory.data().owner */} owner</td>
               <td>{inventory.data().members.length}</td>
@@ -59,7 +59,7 @@ const InventoryIndexPage: React.FC = () => {
           <li>Potentially a list of public or friends inventories?</li>
         </ul>
       </Paper>
-    </div>
+    </>
   );
 };
 

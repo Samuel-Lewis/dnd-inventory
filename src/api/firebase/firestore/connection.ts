@@ -27,7 +27,7 @@ export const converter = <
   fromFirestore: (snap: QueryDocumentSnapshot) => snap.data() as T,
 });
 
-const nonNull = <T>(value: T | null | undefined): value is T => {
+export const nonNull = <T>(value: T | null | undefined): value is T => {
   return value !== null && value !== undefined;
 };
 
@@ -45,6 +45,13 @@ export class FirestoreConnection<T extends WithFieldValue<DocumentData>> {
     this.collectionRef = collection(this.fs, this.tableKey).withConverter(
       this.converter
     );
+  }
+
+  public refWithConverter(ref: DocumentReference<T> | null) {
+    if (!ref) {
+      return null;
+    }
+    return ref.withConverter(this.converter);
   }
 
   public async create(item: T, keyHint?: string) {
@@ -101,7 +108,12 @@ export class FirestoreConnection<T extends WithFieldValue<DocumentData>> {
     await updateDoc(docRef, item);
   }
 
-  public async hydrateRef(ref: DocumentReference<T>) {
+  public async hydrateRef(
+    ref: DocumentReference<T>
+  ): Promise<ConnectionReturn<T> | null> {
+    if (!ref) {
+      console.error("NO REF");
+    }
     const docSnap = await getDoc(ref.withConverter(this.converter));
     if (docSnap.exists()) {
       return { ref, snap: docSnap, data: docSnap.data() };

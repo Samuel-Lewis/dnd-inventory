@@ -3,7 +3,7 @@ import React from "react";
 
 import { Group, Text, Tooltip } from "@mantine/core";
 
-import { getValue } from "~/lib/Value";
+import { getValue } from "~/lib/value";
 
 export interface ValueProps {
   value?: number;

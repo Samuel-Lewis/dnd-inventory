@@ -7,6 +7,8 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 
+import { addItemModalFactory } from "~/components/modals";
+
 export default function IndexPage() {
   const theme = useMantineTheme();
 
@@ -14,7 +16,13 @@ export default function IndexPage() {
     <Stack>
       <Group>
         {Object.keys(theme.colors).map((color) => (
-          <Button key={color} color={color}>
+          <Button
+            key={color}
+            color={color}
+            onClick={addItemModalFactory({
+              onConfirm: () => [],
+            })}
+          >
             {color}
           </Button>
         ))}

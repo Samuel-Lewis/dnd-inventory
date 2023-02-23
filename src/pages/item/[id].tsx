@@ -42,24 +42,6 @@ const ItemIdPage: React.FC = () => {
           <Text>{data.description}</Text>
         </>
       )}
-
-      {/* <Paper withBorder p="sm">
-        <Title order={3}>TODO</Title>
-        <ul>
-          <li>
-            No perms
-            <ul>
-              <li>public/member/owner: Public view of item</li>
-              <li>
-                public/member/owner: Button to add to inventory, prompts signup
-                if not logged in
-              </li>
-              <li>protected/private: Doesnt exist</li>
-            </ul>
-          </li>
-          <li>Owner: Edit fields</li>
-        </ul>
-      </Paper> */}
     </Stack>
   );
 };

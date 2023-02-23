@@ -3,12 +3,14 @@ import { AppProps } from "next/app";
 import Head from "next/head";
 import { useEffect } from "react";
 
+import { ModalsProvider } from "@mantine/modals";
 import { ThemeProvider } from "@samuel-lewis/components";
 
 import { firebase } from "~/api/firebase";
 import { userConnection } from "~/api/firebase/firestore/user";
 import { colorsOverride } from "~/components/colors";
 import { Layout } from "~/components/Layout";
+import { AddItemModal, ADD_ITEM_MODAL_KEY } from "~/components/modals";
 import { RouterTransition } from "~/components/RouterTransition";
 
 export default function App(props: AppProps) {
@@ -41,10 +43,22 @@ export default function App(props: AppProps) {
           primaryColor: "red",
         }}
       >
-        <Layout>
-          <RouterTransition />
-          <Component {...pageProps} />
-        </Layout>
+        <ModalsProvider
+          modals={{ [ADD_ITEM_MODAL_KEY]: AddItemModal }}
+          modalProps={{
+            size: "xl",
+            transition: "fade",
+            centered: true,
+            closeOnClickOutside: false,
+            exitTransitionDuration: 200,
+            overflow: "inside",
+          }}
+        >
+          <Layout>
+            <RouterTransition />
+            <Component {...pageProps} />
+          </Layout>
+        </ModalsProvider>
       </ThemeProvider>
     </>
   );

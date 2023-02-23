@@ -6,7 +6,7 @@ import { ItemCategory } from "~/api/firebase/models/Item";
 import { itemCategories } from "~/lib/category/category";
 
 export interface CategoryProps {
-  category: ItemCategory;
+  category?: ItemCategory;
   compact?: boolean;
 }
 
@@ -19,8 +19,11 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export const Category: React.FC<CategoryProps> = ({ category, compact }) => {
-  const { name, Icon } = itemCategories[category];
   const { classes } = useStyles();
+  if (!category) {
+    return null;
+  }
+  const { name, Icon } = itemCategories[category];
 
   if (compact) {
     return (

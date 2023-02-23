@@ -1,50 +1,38 @@
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useDocument } from "react-firebase-hooks/firestore";
 
-import { Paper, Title } from "@mantine/core";
+import { Button, Stack, Title } from "@mantine/core";
 
-import { ConnectionReturn } from "~/api/firebase/firestore/connection";
 import { inventoryConnection } from "~/api/firebase/firestore/inventory";
-import { Inventory } from "~/api/firebase/models/Inventory";
+import { ItemIndex } from "~/components/ItemIndex";
+import { addItemModalFactory } from "~/components/modals";
 
-interface InventoryIdPageProps {
-  inventory?: ConnectionReturn<Inventory>;
-}
-
-const InventoryIdPage: React.FC<InventoryIdPageProps> = () => {
+const InventoryIdPage: React.FC = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  const [inventory, setInventory] = useState<
-    ConnectionReturn<Inventory> | undefined
-  >();
+  const [inventory, inventoryLoading, inventoryError] = useDocument(
+    inventoryConnection.getDoc(id as string)
+  );
 
-  useEffect(() => {
-    if (typeof id !== "string") {
-      return;
-    }
-
-    inventoryConnection.getDocValue(id).then((inventory) => {
-      setInventory(inventory ?? undefined);
-    });
-  });
-
-  if (!inventory) {
+  if (!inventory || inventoryLoading || inventoryError) {
     return <div>Not found</div>;
   }
 
   return (
-    <div>
-      <Title>{inventory.data.name}</Title>
-      There are {inventory.data.items.length} items in the inventory
-      <Paper withBorder p="sm">
-        <Title order={3}>TODO</Title>
-        <ul>
-          <li>{id}</li>
-          <li>List of contents in inventory</li>
-        </ul>
-      </Paper>
-    </div>
+    <Stack>
+      <Title>{inventory.data()?.name}</Title>
+      There are {inventory.data()?.items.length} items in the inventory
+      <ItemIndex inventoryItems={inventory.data()?.items ?? []} />
+      <Button
+        onClick={addItemModalFactory({
+          onConfirm: () => [],
+        })}
+      >
+        Add item
+      </Button>
+    </Stack>
   );
 };
 
