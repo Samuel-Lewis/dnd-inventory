@@ -23,6 +23,11 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       // footer={<GlobalFooter />}
       navbar={<GlobalNav navOpen={navOpen} />}
       navbarOffsetBreakpoint="sm"
+      sx={{
+        ".mantine-AppShell-main": {
+          height: "calc(100vh - var(--mantine-header-height))",
+        },
+      }}
     >
       {children}
     </AppShell>

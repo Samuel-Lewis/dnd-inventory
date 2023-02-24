@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { useCollection } from "react-firebase-hooks/firestore";
 
-import { Text, Title, Stack, Center, Loader } from "@mantine/core";
+import { Title, Stack } from "@mantine/core";
 
 import { itemConnection } from "~/api/firebase/firestore/item";
 import { ItemIndex } from "~/components/ItemIndex";
@@ -9,7 +9,7 @@ import { useLocalUser } from "~/hooks/useLocalUser";
 
 const ItemIndexPage: React.FC = () => {
   const { localUser } = useLocalUser();
-  const [items, itemsLoading, itemsError] = useCollection(
+  const [items] = useCollection(
     itemConnection.publicItemsQuery(localUser?.ref ?? null)
   );
 
@@ -28,14 +28,8 @@ const ItemIndexPage: React.FC = () => {
   }, [items]);
 
   return (
-    <Stack>
+    <Stack sx={{ height: "100%" }}>
       <Title>All Items</Title>
-      {itemsError && <Text>{itemsError.message}</Text>}
-      {itemsLoading && (
-        <Center>
-          <Loader />
-        </Center>
-      )}
       <ItemIndex inventoryItems={transformedItems} />
     </Stack>
   );

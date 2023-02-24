@@ -9,8 +9,8 @@
     "start": "next start",
     "lint": "eslint --fix .",
     "prettier:fix": "prettier --write --ignore-unknown .",
-    "generate:dnd5e": "export OUTPUT_PATH=./api/dnd5e/generated && rm -rf \"${OUTPUT_PATH}\" && openapi --useOptions --useUnionTypes --input http://www.dnd5eapi.co/swagger/openapi.json --output \"${OUTPUT_PATH}\" && pnpm prettier:fix",
-    "generate:svgs": "svgr --out-dir src/lib/category/icons --filename-case kebab --typescript --no-dimensions --prettier-config .prettier.js -- public/icons"
+    "generate:svgs": "svgr --out-dir src/lib/category/icons --filename-case kebab --typescript --no-dimensions --prettier-config .prettier.js -- public/icons",
+    "generate:borders": "svgr --out-dir src/lib/category/borders --filename-case kebab --typescript --no-dimensions --prettier-config .prettier.js -- public/borders"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",

@@ -1,10 +1,11 @@
 import React from "react";
 
-import { Group, Paper, Spoiler, Stack, Text, Title } from "@mantine/core";
+import { Group, Spoiler, Stack, Text, Title } from "@mantine/core";
 
 import { HydratedInventoryItemEntry } from "~/api/firebase/models/Inventory";
 
 import { Category } from "../Category";
+import { FancyPaper } from "../FancyPaper";
 import { Value } from "../Value";
 
 export interface ItemCardProps {
@@ -14,8 +15,9 @@ export interface ItemCardProps {
 export const ItemCard: React.FC<ItemCardProps> = ({ inventoryItem }) => {
   const { name, description, category, rarity, value } =
     inventoryItem.item?.data ?? {};
+
   return (
-    <Paper my="xs" p="xs" withBorder>
+    <FancyPaper rarity={rarity}>
       <Stack>
         <Title order={4}>{name}</Title>
         <Group>
@@ -27,6 +29,6 @@ export const ItemCard: React.FC<ItemCardProps> = ({ inventoryItem }) => {
       <Spoiler maxHeight={24} hideLabel={"Hide"} showLabel={"More..."}>
         {description}
       </Spoiler>
-    </Paper>
+    </FancyPaper>
   );
 };

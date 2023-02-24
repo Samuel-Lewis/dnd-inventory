@@ -1,7 +1,7 @@
 import Fuse from "fuse.js";
 import React, { ComponentProps, useEffect, useMemo } from "react";
 
-import { Paper, ScrollArea, Stack, TextInput } from "@mantine/core";
+import { Box, ScrollArea, Stack, TextInput } from "@mantine/core";
 
 import { ConnectionReturn, nonNull } from "~/api/firebase/firestore/connection";
 import { itemConnection } from "~/api/firebase/firestore/item";
@@ -79,19 +79,20 @@ export const ItemIndex: React.FC<ItemIndexProps> = ({
   }, [searchTerm, fuse, hydratedItems]);
 
   return (
-    <Stack spacing="xs">
-      <Paper p="sm" sx={{ position: "sticky", top: 0, zIndex: 100 }}>
+    <Stack spacing="xs" sx={{ flex: "1 0", minHeight: 0, height: "100%" }}>
+      <Box>
         <TextInput
           label="Search"
           value={searchTerm}
           onChange={(event) => setSearchTerm(event.currentTarget.value)}
         />
-      </Paper>
-      <ScrollArea.Autosize maxHeight={"50%"}>
+      </Box>
+
+      <ScrollArea offsetScrollbars>
         {searchList.map((item) => (
           <ItemCard inventoryItem={item} key={item.itemRef.id} />
         ))}
-      </ScrollArea.Autosize>
+      </ScrollArea>
     </Stack>
   );
 };

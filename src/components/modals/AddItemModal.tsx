@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { useCollection } from "react-firebase-hooks/firestore";
 
-import { Text } from "@mantine/core";
+import { Stack, Text } from "@mantine/core";
 import { ContextModalProps, openContextModal } from "@mantine/modals";
 import { OpenContextModal } from "@mantine/modals/lib/context";
 
@@ -24,6 +24,13 @@ export const addItemModalFactory = (
   return () =>
     openContextModal({
       modal: ADD_ITEM_MODAL_KEY,
+      sx: {
+        ".mantine-Modal-modal": {
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+        },
+      },
       title: "Add Item",
       ...modalProps,
       innerProps,
@@ -56,9 +63,9 @@ export const AddItemModal: React.FC<
   }, [items]);
 
   return (
-    <>
+    <Stack sx={{ height: "100%" }}>
       <Text>All the items! {id}</Text>
       <ItemIndex inventoryItems={transformedItems} />
-    </>
+    </Stack>
   );
 };

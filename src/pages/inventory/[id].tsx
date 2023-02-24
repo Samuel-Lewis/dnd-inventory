@@ -21,10 +21,9 @@ const InventoryIdPage: React.FC = () => {
   }
 
   return (
-    <Stack>
+    <Stack sx={{ height: "100%" }}>
       <Title>{inventory.data()?.name}</Title>
       There are {inventory.data()?.items.length} items in the inventory
-      <ItemIndex inventoryItems={inventory.data()?.items ?? []} />
       <Button
         onClick={addItemModalFactory({
           onConfirm: () => [],
@@ -32,6 +31,7 @@ const InventoryIdPage: React.FC = () => {
       >
         Add item
       </Button>
+      <ItemIndex inventoryItems={inventory.data()?.items ?? []} />
     </Stack>
   );
 };
