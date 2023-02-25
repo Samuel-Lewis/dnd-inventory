@@ -10,9 +10,11 @@
   - [ ] Clean up home screen
   - [ ] Move SRD items to client
     - Have them as part of "System" or something?
+  - [x] Fix scrolls
+  - [ ] Fix DocMeta attached to Docs
 
 - Stretch
-  - [ ] Rarity border frames
+  - [x] Rarity border frames
   - [ ] Virtualise `<ItemIndex>` list
   - [ ] Filters and sort for `<ItemIndex>`
   - [ ] Refine light mode colour scheme
