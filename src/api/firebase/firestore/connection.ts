@@ -17,8 +17,9 @@ import {
 
 import { toUniqueSlug } from "@samuel-lewis/utils";
 
+import { DocMeta } from "~/api/models/Meta";
+
 import { newMeta } from "../meta";
-import { DocMeta } from "../models/Meta";
 
 export const converter = <
   T extends WithFieldValue<DocumentData>

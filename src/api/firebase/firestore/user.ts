@@ -1,5 +1,6 @@
+import { User } from "~/api/models/User";
+
 import { firebase } from "..";
-import { User } from "../models/User";
 
 import { ConnectionReturn, FirestoreConnection } from "./connection";
 

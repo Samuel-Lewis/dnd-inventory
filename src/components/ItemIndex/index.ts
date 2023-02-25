@@ -1,1 +1,2 @@
-export * from "./ItemIndex";
+export { ItemIndex } from "./ItemIndex";
+export type { ItemIndexProps } from "./ItemIndex";

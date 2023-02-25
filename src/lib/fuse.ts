@@ -1,6 +1,6 @@
 import Fuse from "fuse.js";
 
-import { HydratedInventoryItemEntry } from "~/api/firebase/models/Inventory";
+import { HydratedInventoryItemEntry } from "~/api/models/Inventory";
 
 export const fuseOptions: Fuse.IFuseOptions<HydratedInventoryItemEntry> = {
   includeScore: true,

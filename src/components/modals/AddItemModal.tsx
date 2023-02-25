@@ -6,7 +6,7 @@ import { ContextModalProps, openContextModal } from "@mantine/modals";
 import { OpenContextModal } from "@mantine/modals/lib/context";
 
 import { itemConnection } from "~/api/firebase/firestore/item";
-import { InventoryItemEntry } from "~/api/firebase/models/Inventory";
+import { InventoryItemEntry } from "~/api/models/Inventory";
 import { useLocalUser } from "~/hooks/useLocalUser";
 
 import { ItemIndex } from "../ItemIndex";

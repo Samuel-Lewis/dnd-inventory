@@ -7,7 +7,7 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 
-import { Rarity } from "~/api/firebase/models/Item";
+import { Rarity } from "~/api/models/Item";
 import {
   FancyBorder00,
   FancyBorder02,
@@ -75,25 +75,25 @@ const useStyles = createStyles(
         height: 30,
         position: "absolute",
 
-        "&:nth-child(1)": {
+        "&:nth-of-type(1)": {
           transform: "rotate(0deg)",
           top: -offset,
           left: -offset,
         },
 
-        "&:nth-child(2)": {
+        "&:nth-of-type(2)": {
           transform: "rotate(90deg)",
           top: -offset,
           right: -offset,
         },
 
-        "&:nth-child(3)": {
+        "&:nth-of-type(3)": {
           transform: "rotate(180deg)",
           bottom: -offset,
           right: -offset,
         },
 
-        "&:nth-child(4)": {
+        "&:nth-of-type(4)": {
           transform: "rotate(270deg)",
           bottom: -offset,
           left: -offset,

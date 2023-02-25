@@ -1,6 +1,6 @@
 import { FirebaseApp, initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, loadBundle } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -15,6 +15,15 @@ class FirebaseConnection {
   readonly app: FirebaseApp;
   constructor(private config: Record<string, string | undefined>) {
     this.app = initializeApp(this.config);
+
+    // Load bundle
+    fetch("bundle.txt")
+      .then((result) => {
+        if (result.body) {
+          loadBundle(this.firestore, result.body);
+        }
+      })
+      .catch((e) => console.log("Failed to load cache bundle", e));
   }
 
   get firestore() {

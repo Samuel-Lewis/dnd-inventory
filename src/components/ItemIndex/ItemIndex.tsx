@@ -8,8 +8,8 @@ import { itemConnection } from "~/api/firebase/firestore/item";
 import {
   InventoryItemEntry,
   HydratedInventoryItemEntry,
-} from "~/api/firebase/models/Inventory";
-import { Item, ItemRef } from "~/api/firebase/models/Item";
+} from "~/api/models/Inventory";
+import { Item, ItemRef } from "~/api/models/Item";
 import { fuseOptions } from "~/lib/fuse";
 
 import { ItemCard } from "./ItemCard";

@@ -1,13 +1,14 @@
 import { query, where, arrayUnion, DocumentSnapshot } from "firebase/firestore";
 
-import { firebase } from "..";
 import {
   Inventory,
   InventoryItemEntry,
   InventoryKey,
-} from "../models/Inventory";
-import { ItemRef } from "../models/Item";
-import { UserRef } from "../models/User";
+} from "~/api/models/Inventory";
+import { ItemRef } from "~/api/models/Item";
+import { UserRef } from "~/api/models/User";
+
+import { firebase } from "..";
 
 import { FirestoreConnection } from "./connection";
 

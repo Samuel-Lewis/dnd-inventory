@@ -2,7 +2,7 @@ import React from "react";
 
 import { Group, Spoiler, Stack, Text, Title } from "@mantine/core";
 
-import { HydratedInventoryItemEntry } from "~/api/firebase/models/Inventory";
+import { HydratedInventoryItemEntry } from "~/api/models/Inventory";
 
 import { Category } from "../Category";
 import { FancyPaper } from "../FancyPaper";

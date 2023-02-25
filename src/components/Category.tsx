@@ -2,7 +2,7 @@ import React from "react";
 
 import { Box, createStyles, Group, Text, Tooltip } from "@mantine/core";
 
-import { ItemCategory } from "~/api/firebase/models/Item";
+import { ItemCategory } from "~/api/models/Item";
 import { itemCategories } from "~/lib/category/category";
 
 export interface CategoryProps {

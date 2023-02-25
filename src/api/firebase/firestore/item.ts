@@ -1,8 +1,9 @@
 import { query, where } from "firebase/firestore";
 
+import { Item } from "~/api/models/Item";
+import { UserRef } from "~/api/models/User";
+
 import { firebase } from "..";
-import { Item } from "../models/Item";
-import { UserRef } from "../models/User";
 
 import { ConnectionReturn, FirestoreConnection } from "./connection";
 

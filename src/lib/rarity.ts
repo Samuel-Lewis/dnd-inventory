@@ -1,4 +1,4 @@
-import { Rarity } from "~/api/firebase/models/Item";
+import { Rarity } from "~/api/models/Item";
 
 export const rarityToColor: Record<Rarity, string> = {
   varies: "gray",
