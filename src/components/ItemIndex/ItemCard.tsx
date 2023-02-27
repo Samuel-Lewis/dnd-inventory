@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Group, Spoiler, Stack, Text, Title } from "@mantine/core";
+import { Badge, Group, Spoiler, Stack, Text, Title } from "@mantine/core";
 
 import { HydratedInventoryItemEntry } from "~/api/models/Inventory";
 
@@ -20,6 +20,11 @@ export const ItemCard: React.FC<ItemCardProps> = ({ inventoryItem }) => {
     <FancyPaper rarity={rarity}>
       <Stack>
         <Title order={4}>{name}</Title>
+        {inventoryItem.item?.snap.metadata.fromCache ? (
+          <Badge color="green">Cached</Badge>
+        ) : (
+          <Badge color="red">Server</Badge>
+        )}
         <Group>
           <Category category={category} />
           <Text>{rarity}</Text>

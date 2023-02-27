@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import { useCollection } from "react-firebase-hooks/firestore";
+import { useCollectionOnce } from "react-firebase-hooks/firestore";
 
 import { Paper, Table, Title } from "@mantine/core";
 import { DebugPanel } from "@samuel-lewis/components";
@@ -11,7 +11,7 @@ import { useLocalUser } from "~/hooks/useLocalUser";
 const InventoryIndexPage: React.FC = () => {
   const { localUser } = useLocalUser();
 
-  const [inventories] = useCollection(
+  const [inventories] = useCollectionOnce(
     inventoryConnection.ownedInventoriesQuery(localUser?.ref)
   );
 

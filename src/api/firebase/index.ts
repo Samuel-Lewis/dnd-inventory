@@ -1,3 +1,4 @@
+import axios from "axios";
 import { FirebaseApp, initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore, loadBundle } from "firebase/firestore";
@@ -11,19 +12,31 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
+const dev = process.env.NODE_ENV !== "production";
+const server = dev
+  ? "http://localhost:3000"
+  : "https://your_deployment.server.com";
+
 class FirebaseConnection {
   readonly app: FirebaseApp;
   constructor(private config: Record<string, string | undefined>) {
-    this.app = initializeApp(this.config);
+    const a = initializeApp(this.config);
+    const fs = getFirestore(a);
+    this.app = a;
 
     // Load bundle
-    fetch("bundle.txt")
+    axios
+      .get(`${server}/api/bundle`)
       .then((result) => {
-        if (result.body) {
-          loadBundle(this.firestore, result.body);
+        if (result.data) {
+          try {
+            loadBundle(fs, result.data);
+          } catch (e) {
+            console.warn("Failed to load cache bundle", e);
+          }
         }
       })
-      .catch((e) => console.log("Failed to load cache bundle", e));
+      .catch((e) => console.warn("Failed to load cache bundle", e));
   }
 
   get firestore() {

@@ -8,8 +8,9 @@
   - [ ] Detail /item/[id] screen
   - [ ] Clean up /user
   - [ ] Clean up home screen
-  - [ ] Move SRD items to client
-    - Have them as part of "System" or something?
+  - [?] Add bundling for SRD items
+    - Partially done. Bundling is implemented, but not sure if everything uses the cache correctly
+    - Need a query for the non cached items?
   - [x] Fix scrolls
   - [ ] Fix DocMeta attached to Docs
 

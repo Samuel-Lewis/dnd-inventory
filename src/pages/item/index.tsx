@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { useCollection } from "react-firebase-hooks/firestore";
+import { useCollectionOnce } from "react-firebase-hooks/firestore";
 
 import { Title, Stack } from "@mantine/core";
 
@@ -9,23 +9,26 @@ import { useLocalUser } from "~/hooks/useLocalUser";
 
 const ItemIndexPage: React.FC = () => {
   const { localUser } = useLocalUser();
-  const [items] = useCollection(
-    itemConnection.publicItemsQuery(localUser?.ref ?? null)
+  const [publicItems] = useCollectionOnce(
+    itemConnection.publicItemsQuery(localUser?.ref ?? null),
+    {
+      getOptions: { source: "cache" },
+    }
   );
 
   const transformedItems = useMemo(() => {
-    if (!items) {
+    if (!publicItems) {
       return [];
     }
 
-    return items.docs.map((doc) => {
+    return publicItems.docs.map((doc) => {
       const data = doc.data();
       return {
         item: { ref: doc.ref, data, snap: doc },
         itemRef: doc.ref,
       };
     });
-  }, [items]);
+  }, [publicItems]);
 
   return (
     <Stack sx={{ height: "100%" }}>

@@ -44,23 +44,23 @@ export const AddItemModal: React.FC<
   id,
 }) => {
   const { localUser } = useLocalUser();
-  const [items] = useCollection(
+  const [publicItems] = useCollection(
     itemConnection.publicItemsQuery(localUser?.ref ?? null)
   );
 
   const transformedItems = useMemo(() => {
-    if (!items) {
+    if (!publicItems) {
       return [];
     }
 
-    return items.docs.map((doc) => {
+    return publicItems.docs.map((doc) => {
       const data = doc.data();
       return {
         item: { ref: doc.ref, data, snap: doc },
         itemRef: doc.ref,
       };
     });
-  }, [items]);
+  }, [publicItems]);
 
   return (
     <Stack sx={{ height: "100%" }}>
