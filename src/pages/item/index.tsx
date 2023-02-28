@@ -4,6 +4,7 @@ import { useCollectionOnce } from "react-firebase-hooks/firestore";
 import { Title, Stack } from "@mantine/core";
 
 import { itemConnection } from "~/api/firebase/firestore/item";
+import { HydratedInventoryItemEntry } from "~/api/models/Inventory";
 import { ItemIndex } from "~/components/ItemIndex";
 import { useLocalUser } from "~/hooks/useLocalUser";
 
@@ -23,10 +24,12 @@ const ItemIndexPage: React.FC = () => {
 
     return publicItems.docs.map((doc) => {
       const data = doc.data();
-      return {
+      const t: HydratedInventoryItemEntry = {
         item: { ref: doc.ref, data, snap: doc },
         itemRef: doc.ref,
+        quantity: -1,
       };
+      return t;
     });
   }, [publicItems]);
 

@@ -1,39 +1,64 @@
-import React from "react";
+import React, { useMemo } from "react";
 
-import { Badge, Group, Spoiler, Stack, Text, Title } from "@mantine/core";
+import { Text, Grid, Group, Stack, Title, Spoiler } from "@mantine/core";
 
 import { HydratedInventoryItemEntry } from "~/api/models/Inventory";
 
-import { Category } from "../Category";
 import { FancyPaper } from "../FancyPaper";
-import { Value } from "../Value";
+import { CategoryTrait, TraitLine } from "../item-traits";
 
 export interface ItemCardProps {
   inventoryItem: HydratedInventoryItemEntry;
+  renderSideElement?: (item: HydratedInventoryItemEntry) => React.ReactNode;
 }
 
-export const ItemCard: React.FC<ItemCardProps> = ({ inventoryItem }) => {
-  const { name, description, category, rarity, value } =
+export const ItemCard: React.FC<ItemCardProps> = ({
+  inventoryItem,
+  renderSideElement,
+}) => {
+  const { name, description, rarity, category } =
     inventoryItem.item?.data ?? {};
+  const notes = inventoryItem.notes;
+
+  const rightSide = useMemo(() => {
+    if (renderSideElement) {
+      return renderSideElement(inventoryItem);
+    }
+    return null;
+  }, [inventoryItem, renderSideElement]);
 
   return (
     <FancyPaper rarity={rarity}>
-      <Stack>
-        <Title order={4}>{name}</Title>
-        {inventoryItem.item?.snap.metadata.fromCache ? (
-          <Badge color="green">Cached</Badge>
-        ) : (
-          <Badge color="red">Server</Badge>
-        )}
-        <Group>
-          <Category category={category} />
-          <Text>{rarity}</Text>
-          <Value value={value} />
-        </Group>
+      <Stack spacing="xs">
+        <Grid>
+          <Grid.Col span={9}>
+            <Group spacing="sm">
+              <CategoryTrait
+                category={category}
+                useTooltip
+                useLabel={false}
+                iconSize={30}
+              />
+              <Stack spacing={0}>
+                <Title order={3}>{name}</Title>
+                <Text mt={-6} color="dimmed">
+                  <CategoryTrait category={category} useLabel useIcon={false} />
+                </Text>
+                <TraitLine inventoryItem={inventoryItem} />
+              </Stack>
+            </Group>
+          </Grid.Col>
+          <Grid.Col span={3}>
+            <Group spacing="sm">{rightSide}</Group>
+          </Grid.Col>
+        </Grid>
+        <Spoiler hideLabel="Hide" showLabel="Show" maxHeight={26}>
+          <Stack>
+            {notes && <Text>{notes}</Text>}
+            {description && <Text fs="italic">{description}</Text>}
+          </Stack>
+        </Spoiler>
       </Stack>
-      <Spoiler maxHeight={24} hideLabel={"Hide"} showLabel={"More..."}>
-        {description}
-      </Spoiler>
     </FancyPaper>
   );
 };

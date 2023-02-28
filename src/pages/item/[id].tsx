@@ -5,7 +5,6 @@ import { useDocument } from "react-firebase-hooks/firestore";
 import { Center, Loader, Stack, Title, Text } from "@mantine/core";
 
 import { itemConnection } from "~/api/firebase/firestore/item";
-import { Value } from "~/components/Value";
 
 const ItemIdPage: React.FC = () => {
   const router = useRouter();
@@ -35,7 +34,6 @@ const ItemIdPage: React.FC = () => {
 
       {data && (
         <>
-          <Value value={data.value} />
           <Text> {data.weight && `${data.weight} lbs`}</Text>
           <Text>{data.rarity && `${data.rarity} rarity`}</Text>
 

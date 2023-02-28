@@ -13,12 +13,15 @@
     - Need a query for the non cached items?
   - [x] Fix scrolls
   - [ ] Fix DocMeta attached to Docs
+  - [ ] Fix inventory items being dependent on item ref
 
 - Stretch
   - [x] Rarity border frames
   - [ ] Virtualise `<ItemIndex>` list
   - [ ] Filters and sort for `<ItemIndex>`
   - [ ] Refine light mode colour scheme
+  - [ ] Add dnd equip loader as build scripts
+  - [ ] Fix increment counter not respecting explicit value
 
 ### Corner Border Ideas
 

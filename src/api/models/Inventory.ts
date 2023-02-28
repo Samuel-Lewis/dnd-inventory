@@ -12,7 +12,7 @@ export type InventoryItemEntry = {
 };
 
 export type HydratedInventoryItemEntry = InventoryItemEntry & {
-  item: ConnectionReturn<Item> | null;
+  item?: ConnectionReturn<Item>;
 };
 
 export interface Inventory {

@@ -29,6 +29,5 @@ export interface Item {
   value?: number;
   srdRefSlug?: string;
   series?: SeriesRef;
-  system?: boolean;
   rarity?: Rarity;
 }

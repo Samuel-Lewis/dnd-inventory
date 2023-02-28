@@ -5,11 +5,11 @@ import { Group, Text, Tooltip } from "@mantine/core";
 
 import { getValue } from "~/lib/value";
 
-export interface ValueProps {
+export interface ValueTraitProps {
   value?: number;
 }
 
-export const Value: React.FC<ValueProps> = ({ value }) => {
+export const ValueTrait: React.FC<ValueTraitProps> = ({ value }) => {
   if (!value) {
     return null;
   }

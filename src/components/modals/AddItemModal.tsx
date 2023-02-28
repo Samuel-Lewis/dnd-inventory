@@ -1,18 +1,21 @@
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { useCollection } from "react-firebase-hooks/firestore";
 
-import { Stack, Text } from "@mantine/core";
+import { Button, Stack, Text } from "@mantine/core";
 import { ContextModalProps, openContextModal } from "@mantine/modals";
 import { OpenContextModal } from "@mantine/modals/lib/context";
 
 import { itemConnection } from "~/api/firebase/firestore/item";
-import { InventoryItemEntry } from "~/api/models/Inventory";
+import {
+  HydratedInventoryItemEntry,
+  InventoryItemEntry,
+} from "~/api/models/Inventory";
 import { useLocalUser } from "~/hooks/useLocalUser";
 
 import { ItemIndex } from "../ItemIndex";
 
 export type AddItemModalInnerProps = {
-  onConfirm: () => InventoryItemEntry[];
+  onConfirm: (newItems: InventoryItemEntry[]) => void;
 };
 
 export const ADD_ITEM_MODAL_KEY = "addItem";
@@ -39,13 +42,18 @@ export const addItemModalFactory = (
 
 export const AddItemModal: React.FC<
   ContextModalProps<AddItemModalInnerProps>
-> = ({
-  /*context, id, innerProps*/
-  id,
-}) => {
+> = ({ id, context, innerProps: { onConfirm } }) => {
   const { localUser } = useLocalUser();
   const [publicItems] = useCollection(
     itemConnection.publicItemsQuery(localUser?.ref ?? null)
+  );
+
+  const selectItem = useCallback(
+    (item: InventoryItemEntry) => {
+      onConfirm([item]);
+      context.closeModal(id);
+    },
+    [onConfirm, context, id]
   );
 
   const transformedItems = useMemo(() => {
@@ -55,17 +63,24 @@ export const AddItemModal: React.FC<
 
     return publicItems.docs.map((doc) => {
       const data = doc.data();
-      return {
+      const t: HydratedInventoryItemEntry = {
         item: { ref: doc.ref, data, snap: doc },
         itemRef: doc.ref,
+        quantity: -1,
       };
+      return t;
     });
   }, [publicItems]);
 
   return (
     <Stack sx={{ height: "100%" }}>
       <Text>All the items! {id}</Text>
-      <ItemIndex inventoryItems={transformedItems} />
+      <ItemIndex
+        inventoryItems={transformedItems}
+        renderSideElement={(i) => (
+          <Button onClick={() => selectItem(i)}>Add</Button>
+        )}
+      />
     </Stack>
   );
 };

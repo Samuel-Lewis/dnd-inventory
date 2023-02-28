@@ -2,15 +2,15 @@ import React from "react";
 
 import { Text, Tooltip } from "@mantine/core";
 
-export interface WeightProps {
+export interface WeightTraitProps {
   weight?: number;
 }
 
 const lbToKg = (lb: number) => (lb * 0.45359237).toFixed(2);
 
-export const Weight: React.FC<WeightProps> = ({ weight }) => {
+export const WeightTrait: React.FC<WeightTraitProps> = ({ weight }) => {
   if (!weight) {
-    return <Text>-</Text>;
+    return null;
   }
 
   const kg = lbToKg(weight);

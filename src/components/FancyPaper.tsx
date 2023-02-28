@@ -1,6 +1,7 @@
 import React from "react";
 
 import {
+  Box,
   createStyles,
   Paper,
   PaperProps,
@@ -40,9 +41,13 @@ const useStyles = createStyles(
     }
   ) => {
     return {
+      children: {
+        pointerEvents: "auto",
+      },
       frame: {
         position: "relative",
         border: 0,
+        pointerEvents: "none",
 
         ":before": {
           boxShadow: `-1px 0 0 ${currentColor}, 1px 0 0 ${currentColor}`,
@@ -74,6 +79,7 @@ const useStyles = createStyles(
         width: 30,
         height: 30,
         position: "absolute",
+        pointerEvents: "none",
 
         "&:nth-of-type(1)": {
           transform: "rotate(0deg)",
@@ -173,7 +179,7 @@ export const FancyPaper: React.FC<FancyPaperProps> = ({
           <Border className={classes.corner} fill={currentColor} />
         </>
       )}
-      {children}
+      <Box className={classes.children}>{children}</Box>
     </Paper>
   );
 };

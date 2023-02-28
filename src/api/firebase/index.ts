@@ -3,6 +3,8 @@ import { FirebaseApp, initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore, loadBundle } from "firebase/firestore";
 
+import { getAbsoluteUrl } from "~/lib/vercel";
+
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
@@ -12,31 +14,25 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-const dev = process.env.NODE_ENV !== "production";
-const server = dev
-  ? "http://localhost:3000"
-  : "https://your_deployment.server.com";
-
 class FirebaseConnection {
   readonly app: FirebaseApp;
   constructor(private config: Record<string, string | undefined>) {
     const a = initializeApp(this.config);
-    const fs = getFirestore(a);
     this.app = a;
+    const fs = getFirestore(a);
 
-    // Load bundle
     axios
-      .get(`${server}/api/bundle`)
+      .get(`${getAbsoluteUrl()}/api/bundle`)
       .then((result) => {
         if (result.data) {
           try {
             loadBundle(fs, result.data);
           } catch (e) {
-            console.warn("Failed to load cache bundle", e);
+            console.warn("Failed to load cache bundle");
           }
         }
       })
-      .catch((e) => console.warn("Failed to load cache bundle", e));
+      .catch(() => console.warn("Failed to load cache bundle"));
   }
 
   get firestore() {

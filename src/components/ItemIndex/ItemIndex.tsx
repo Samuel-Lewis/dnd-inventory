@@ -3,29 +3,22 @@ import React, { ComponentProps, useEffect, useMemo } from "react";
 
 import { Box, ScrollArea, Stack, TextInput } from "@mantine/core";
 
-import { ConnectionReturn, nonNull } from "~/api/firebase/firestore/connection";
+import { nonNull } from "~/api/firebase/firestore/connection";
 import { itemConnection } from "~/api/firebase/firestore/item";
-import {
-  InventoryItemEntry,
-  HydratedInventoryItemEntry,
-} from "~/api/models/Inventory";
-import { Item, ItemRef } from "~/api/models/Item";
+import { HydratedInventoryItemEntry } from "~/api/models/Inventory";
 import { fuseOptions } from "~/lib/fuse";
 
 import { ItemCard } from "./ItemCard";
 
 export interface ItemIndexProps {
-  inventoryItems: {
-    itemRef: ItemRef;
-    item?: ConnectionReturn<Item>;
-    invItem?: InventoryItemEntry;
-  }[];
-  renderItemCard?: (item: HydratedInventoryItemEntry) => React.ReactNode;
+  inventoryItems: HydratedInventoryItemEntry[];
+  renderSideElement?: (item: HydratedInventoryItemEntry) => React.ReactNode;
   maxHeight?: ComponentProps<typeof ScrollArea.Autosize>["maxHeight"];
 }
 
 export const ItemIndex: React.FC<ItemIndexProps> = ({
   inventoryItems = [],
+  renderSideElement,
 }) => {
   const [hydratedItems, setHydratedItems] = React.useState<
     HydratedInventoryItemEntry[]
@@ -39,12 +32,12 @@ export const ItemIndex: React.FC<ItemIndexProps> = ({
 
   useEffect(() => {
     Promise.all(
-      inventoryItems.map(async ({ itemRef, item, invItem }) => {
+      inventoryItems.map(async ({ itemRef, item, ...rest }) => {
         if (item) {
           return {
             itemRef,
             item,
-            invItem,
+            ...rest,
           };
         }
 
@@ -56,16 +49,11 @@ export const ItemIndex: React.FC<ItemIndexProps> = ({
         return {
           itemRef,
           item: hydratedItem,
-          invItem,
+          ...rest,
         };
       })
     ).then((i) => {
-      const list = i.filter(nonNull).map((i) => ({
-        ...i,
-        quantity: i.invItem?.quantity ?? -1,
-        notes: i.invItem?.notes,
-      }));
-
+      const list = i.filter(nonNull);
       setHydratedItems(list);
     });
   }, [inventoryItems]);
@@ -90,7 +78,11 @@ export const ItemIndex: React.FC<ItemIndexProps> = ({
 
       <ScrollArea offsetScrollbars>
         {searchList.map((item) => (
-          <ItemCard inventoryItem={item} key={item.itemRef.id} />
+          <ItemCard
+            inventoryItem={item}
+            key={item.itemRef.id}
+            renderSideElement={renderSideElement}
+          />
         ))}
       </ScrollArea>
     </Stack>
