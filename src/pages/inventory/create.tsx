@@ -47,8 +47,8 @@ const InventoryCreatePage: React.FC = () => {
   );
 
   return (
-    <div>
-      <Title order={2}>Create new inventory</Title>
+    <Stack>
+      <Title order={2}>New Inventory</Title>
       <form onSubmit={form.onSubmit(handleFormSubmit)}>
         <Stack>
           <TextInput
@@ -65,19 +65,11 @@ const InventoryCreatePage: React.FC = () => {
           />
 
           <Button loading={formSubmitting} type="submit">
-            Submit
+            Create
           </Button>
         </Stack>
       </form>
-      {/* <Paper withBorder p="sm">
-        <Title order={3}>TODO</Title>
-        <ul>
-          <li>No perms, redirects to signup?</li>
-          <li>Form to create inventory</li>
-          <li>Optional to immediately add items</li>
-        </ul>
-      </Paper> */}
-    </div>
+    </Stack>
   );
 };
 

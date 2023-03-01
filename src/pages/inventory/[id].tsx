@@ -8,6 +8,7 @@ import { inventoryConnection } from "~/api/firebase/firestore/inventory";
 import { InventoryItemEntry } from "~/api/models/Inventory";
 import { IncrementNumber } from "~/components/IncrementNumber";
 import { ItemIndex } from "~/components/ItemIndex";
+import { LoadingWrapper } from "~/components/LoadingWrapper";
 import { addItemModalFactory } from "~/components/modals";
 
 const InventoryIdPage: React.FC = () => {
@@ -44,7 +45,7 @@ const InventoryIdPage: React.FC = () => {
   );
 
   if (!inventory || inventoryLoading || inventoryError) {
-    return <div>Not found</div>;
+    return <LoadingWrapper isLoading height={400}></LoadingWrapper>;
   }
 
   return (

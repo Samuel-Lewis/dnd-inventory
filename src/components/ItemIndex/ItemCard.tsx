@@ -44,7 +44,7 @@ export const ItemCard: React.FC<ItemCardProps> = ({
                 <Text mt={-6} color="dimmed">
                   <CategoryTrait category={category} useLabel useIcon={false} />
                 </Text>
-                <TraitLine inventoryItem={inventoryItem} />
+                <TraitLine inventoryItem={inventoryItem} showCategory={false} />
               </Stack>
             </Group>
           </Grid.Col>

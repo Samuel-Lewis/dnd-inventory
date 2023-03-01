@@ -36,7 +36,6 @@ const ItemIdPage: React.FC = () => {
         <>
           <Text> {data.weight && `${data.weight} lbs`}</Text>
           <Text>{data.rarity && `${data.rarity} rarity`}</Text>
-
           <Text>{data.description}</Text>
         </>
       )}

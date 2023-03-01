@@ -164,9 +164,7 @@ export const FancyPaper: React.FC<FancyPaperProps> = ({
 
   return (
     <Paper
-      m="sm"
-      p="sm"
-      px="md"
+      p="md"
       withBorder
       className={cx({ [classes.frame]: useFancy })}
       {...rest}

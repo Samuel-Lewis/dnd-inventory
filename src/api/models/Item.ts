@@ -20,14 +20,14 @@ export type Rarity =
 export type ItemCategory = keyof typeof itemCategories;
 
 export interface Item {
-  category: ItemCategory;
   name: string;
+  description?: string;
   owner: UserRef;
   visibility: "public" | "protected" | "private";
-  description?: string;
-  weight?: number;
-  value?: number;
   srdRefSlug?: string;
   series?: SeriesRef;
+  category: ItemCategory;
+  weight?: number;
+  value?: number;
   rarity?: Rarity;
 }

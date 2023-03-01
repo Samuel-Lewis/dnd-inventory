@@ -10,7 +10,7 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
-import { IconLogout, IconBriefcase, IconShield } from "@tabler/icons";
+import { IconBriefcase, IconShield } from "@tabler/icons";
 
 import { FancyNavButton } from "./FancyNavButton";
 import { LayoutType } from "./types";
@@ -99,6 +99,7 @@ export const GlobalNav: React.FC<GlobalNavProps> = ({ navOpen }) => {
       >
         {layout !== LayoutType.COMPACT && (
           <>
+            {/* TODO: Make this users actual inventories */}
             <NavLink href="/inventory" component={Link} label="My first bag" />
             <NavLink href="/inventory" component={Link} label="My first bag" />
             <NavLink href="/inventory" component={Link} label="My first bag" />
@@ -109,14 +110,14 @@ export const GlobalNav: React.FC<GlobalNavProps> = ({ navOpen }) => {
         )}
       </Navbar.Section>
 
-      <Navbar.Section className={classes.section}>
+      {/* <Navbar.Section className={classes.section}>
         <FancyNavButton
           link="/user/logout"
           Icon={IconLogout}
           label="Logout"
           layout={layout}
         />
-      </Navbar.Section>
+      </Navbar.Section> */}
     </Navbar>
   );
 };

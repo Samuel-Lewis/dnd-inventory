@@ -1,7 +1,7 @@
 import Fuse from "fuse.js";
 import React, { ComponentProps, useEffect, useMemo } from "react";
 
-import { Box, ScrollArea, Stack, TextInput } from "@mantine/core";
+import { ScrollArea, Stack, TextInput } from "@mantine/core";
 
 import { nonNull } from "~/api/firebase/firestore/connection";
 import { itemConnection } from "~/api/firebase/firestore/item";
@@ -67,23 +67,24 @@ export const ItemIndex: React.FC<ItemIndexProps> = ({
   }, [searchTerm, fuse, hydratedItems]);
 
   return (
-    <Stack spacing="xs" sx={{ flex: "1 0", minHeight: 0, height: "100%" }}>
-      <Box>
-        <TextInput
-          label="Search"
-          value={searchTerm}
-          onChange={(event) => setSearchTerm(event.currentTarget.value)}
-        />
-      </Box>
+    <Stack sx={{ flex: "1 0", minHeight: 0, height: "100%" }} spacing="xs">
+      <TextInput
+        label="Search"
+        mx="xs"
+        value={searchTerm}
+        onChange={(event) => setSearchTerm(event.currentTarget.value)}
+      />
 
-      <ScrollArea offsetScrollbars>
-        {searchList.map((item) => (
-          <ItemCard
-            inventoryItem={item}
-            key={item.itemRef.id}
-            renderSideElement={renderSideElement}
-          />
-        ))}
+      <ScrollArea>
+        <Stack m="sm" mt={0}>
+          {searchList.map((item) => (
+            <ItemCard
+              inventoryItem={item}
+              key={item.itemRef.id}
+              renderSideElement={renderSideElement}
+            />
+          ))}
+        </Stack>
       </ScrollArea>
     </Stack>
   );
