@@ -49,7 +49,7 @@ export const TraitLine: React.FC<TraitLineProps> = ({
 
   if (showCache) {
     parts.push(
-      <Badge key={`cache-${id}`} color={cached ? "green" : "red"}>
+      <Badge size="sm" key={`cache-${id}`} color={cached ? "green" : "red"}>
         {cached ? "Cached" : "Server"}
       </Badge>
     );
@@ -58,19 +58,20 @@ export const TraitLine: React.FC<TraitLineProps> = ({
   return (
     <Group spacing="xs">
       {parts.flatMap((part, index, array) => {
+        const parts = [part];
+
         if (index < array.length - 1) {
-          return [
-            part,
+          parts.push(
             <Divider
               m={0}
               p={0}
               key={`${part.key}-divider`}
               orientation="vertical"
-            />,
-          ];
-        } else {
-          return [part];
+            />
+          );
         }
+
+        return parts;
       })}
     </Group>
   );

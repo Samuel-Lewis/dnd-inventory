@@ -3,6 +3,10 @@ import React from "react";
 
 import { Group, Text, Tooltip } from "@mantine/core";
 
+import copperCoin from "~/../public/currency/copper.png";
+import goldCoin from "~/../public/currency/gold.png";
+import platinumCoin from "~/../public/currency/platinum.png";
+import silverCoin from "~/../public/currency/silver.png";
 import { getValue } from "~/lib/value";
 
 export interface ValueTraitProps {
@@ -21,26 +25,26 @@ export const ValueTrait: React.FC<ValueTraitProps> = ({ value }) => {
         {platinum > 0 && (
           <Group spacing={2} noWrap>
             <Text weight={600}>{platinum}</Text>
-            <Image src="/currency/platinum.png" width={16} height={16} alt="" />
+            <Image src={platinumCoin} width={16} height={16} alt="" />
           </Group>
         )}
 
         {gold > 0 && (
           <Group spacing={2} noWrap>
             <Text weight={600}>{gold}</Text>
-            <Image src="/currency/gold.png" width={16} height={16} alt="" />
+            <Image src={goldCoin} width={16} height={16} alt="" />
           </Group>
         )}
         {silver > 0 && (
           <Group spacing={2} noWrap>
             <Text weight={600}>{silver}</Text>
-            <Image src="/currency/silver.png" width={16} height={16} alt="" />
+            <Image src={silverCoin} width={16} height={16} alt="" />
           </Group>
         )}
         {copper > 0 && (
           <Group spacing={2} noWrap>
             <Text weight={600}>{copper}</Text>
-            <Image src="/currency/copper.png" width={16} height={16} alt="" />
+            <Image src={copperCoin} width={16} height={16} alt="" />
           </Group>
         )}
       </Group>

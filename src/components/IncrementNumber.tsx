@@ -1,4 +1,5 @@
-import React, { useRef } from "react";
+import debounce from "lodash.debounce";
+import React, { useCallback, useRef, useState } from "react";
 
 import {
   ActionIcon,
@@ -31,10 +32,21 @@ export const IncrementNumber: React.FC<IncrementNumberProps> = ({
 }) => {
   const handlers = useRef<NumberInputHandlers>();
   const { classes } = useStyles();
+  const [isLast, setIsLast] = useState(false);
   const modals = useModals();
   const step = props.step ?? 1;
-  const lastOne =
-    (props.value ?? 1) - step <= (props.min ?? Number.MIN_SAFE_INTEGER);
+
+  const realOnChange = debounce(props.onChange ?? (() => null), 500);
+
+  const onChange = useCallback(
+    (value: number) => {
+      const checkIsLast =
+        value - step <= (props.min ?? Number.MIN_SAFE_INTEGER);
+      setIsLast(checkIsLast);
+      realOnChange(value);
+    },
+    [props.min, realOnChange, step]
+  );
 
   const handleDecrement = () => {
     if (handlers.current) {
@@ -59,7 +71,7 @@ export const IncrementNumber: React.FC<IncrementNumberProps> = ({
 
   return (
     <Group spacing={0}>
-      {!lastOne ? (
+      {!isLast ? (
         <ActionIcon size="xl" variant="subtle" onClick={handleDecrement}>
           <IconCircleMinus />
         </ActionIcon>
@@ -77,6 +89,7 @@ export const IncrementNumber: React.FC<IncrementNumberProps> = ({
       <NumberInput
         size="md"
         {...props}
+        onChange={onChange}
         hideControls
         handlersRef={handlers}
         className={classes.numberInput}

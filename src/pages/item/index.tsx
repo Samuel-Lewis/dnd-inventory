@@ -1,11 +1,12 @@
 import React, { useMemo } from "react";
 import { useCollectionOnce } from "react-firebase-hooks/firestore";
 
-import { Title, Stack } from "@mantine/core";
+import { Title, Stack, Group } from "@mantine/core";
 
 import { itemConnection } from "~/api/firebase/firestore/item";
 import { HydratedInventoryItemEntry } from "~/api/models/Inventory";
 import { ItemIndex } from "~/components/ItemIndex";
+import { NavButton } from "~/components/NavButton";
 import { useLocalUser } from "~/hooks/useLocalUser";
 
 const ItemIndexPage: React.FC = () => {
@@ -36,6 +37,9 @@ const ItemIndexPage: React.FC = () => {
   return (
     <Stack sx={{ height: "100%" }}>
       <Title>All Items</Title>
+      <Group>
+        <NavButton href="/item/create">Create Item</NavButton>
+      </Group>
       <ItemIndex inventoryItems={transformedItems} />
     </Stack>
   );

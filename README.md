@@ -4,7 +4,7 @@
 
   - [ ] Future proof item.visibility
   - [ ] Future proof item.series
-  - [ ] Add /item/create screen
+  - [x] Add /item/create screen
   - [ ] Detail /item/[id] screen
   - [ ] Clean up /user
   - [ ] Clean up home screen
@@ -21,7 +21,7 @@
   - [ ] Filters and sort for `<ItemIndex>`
   - [ ] Refine light mode colour scheme
   - [ ] Add dnd equip loader as build scripts
-  - [ ] Fix increment counter not respecting explicit value
+  - [x] Fix increment counter not respecting explicit value
 
 ### Corner Border Ideas
 
