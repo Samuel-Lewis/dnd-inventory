@@ -6,6 +6,7 @@ import { UserRef } from "./User";
 export type InventoryKey = string;
 
 export type InventoryItemEntry = {
+  subKey?: string;
   itemRef: ItemRef;
   quantity: number;
   notes?: string;

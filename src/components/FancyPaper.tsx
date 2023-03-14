@@ -80,6 +80,7 @@ const useStyles = createStyles(
         height: 30,
         position: "absolute",
         pointerEvents: "none",
+        overflow: "visible",
 
         "&:nth-of-type(1)": {
           transform: "rotate(0deg)",
@@ -164,6 +165,7 @@ export const FancyPaper: React.FC<FancyPaperProps> = ({
 
   return (
     <Paper
+      m="xs"
       p="md"
       withBorder
       className={cx({ [classes.frame]: useFancy })}

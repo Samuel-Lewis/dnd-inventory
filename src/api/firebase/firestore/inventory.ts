@@ -1,11 +1,12 @@
 import { query, where, arrayUnion, DocumentSnapshot } from "firebase/firestore";
 
+import { toUniqueSlug } from "@samuel-lewis/utils";
+
 import {
   Inventory,
   InventoryItemEntry,
   InventoryKey,
 } from "~/api/models/Inventory";
-import { ItemRef } from "~/api/models/Item";
 import { UserRef } from "~/api/models/User";
 
 import { firebase } from "..";
@@ -20,27 +21,35 @@ class InventoryConnection extends FirestoreConnection<Inventory> {
     return query(this.collectionRef, where("owner", "==", localUserIdRef));
   };
 
+  public allInventoriesQuery = () => {
+    return this.collectionRef;
+  };
+
   public override create(item: Inventory) {
     const keyHint = item.name;
     return super.create(item, keyHint);
   }
 
   public addItem(inventory: InventoryKey, itemDetails: InventoryItemEntry) {
+    const subKey = itemDetails.subKey ?? toUniqueSlug(itemDetails.itemRef.id);
     return this.updateDoc(inventory, {
-      items: arrayUnion(itemDetails),
+      items: arrayUnion({ subKey, ...itemDetails }),
     });
   }
 
   public async updateItemQuantity(
     inventory: DocumentSnapshot<Inventory>,
-    itemRef: ItemRef,
+    subKey: string,
     newQuantity: number
   ) {
     const allItems = inventory.data()?.items ?? [];
-    const childIndex = allItems.findIndex((i) => i.itemRef.id === itemRef.id);
+    const childIndex = allItems.findIndex((i) => i.subKey === subKey);
 
     if (childIndex === -1) {
-      console.warn("Item not found in inventory", { itemRef, inventory });
+      console.warn("Item not found in inventory", {
+        subKey,
+        inventory: inventory.id,
+      });
       return;
     }
 

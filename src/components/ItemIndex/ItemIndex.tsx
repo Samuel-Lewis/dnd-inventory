@@ -1,7 +1,7 @@
 import Fuse from "fuse.js";
 import React, { ComponentProps, useEffect, useMemo } from "react";
 
-import { ScrollArea, Stack, TextInput } from "@mantine/core";
+import { Group, ScrollArea, Stack, TextInput } from "@mantine/core";
 
 import { nonNull } from "~/api/firebase/firestore/connection";
 import { itemConnection } from "~/api/firebase/firestore/item";
@@ -68,15 +68,16 @@ export const ItemIndex: React.FC<ItemIndexProps> = ({
 
   return (
     <Stack sx={{ flex: "1 0", minHeight: 0, height: "100%" }} spacing="xs">
-      <TextInput
-        label="Search"
-        mx="xs"
-        value={searchTerm}
-        onChange={(event) => setSearchTerm(event.currentTarget.value)}
-      />
+      <Group grow mx="xs">
+        <TextInput
+          label="Search"
+          value={searchTerm}
+          onChange={(event) => setSearchTerm(event.currentTarget.value)}
+        />
+      </Group>
 
       <ScrollArea>
-        <Stack m="sm" mt={0}>
+        <Stack spacing={0}>
           {searchList.map((item) => (
             <ItemCard
               inventoryItem={item}

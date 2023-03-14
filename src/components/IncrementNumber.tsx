@@ -32,11 +32,11 @@ export const IncrementNumber: React.FC<IncrementNumberProps> = ({
 }) => {
   const handlers = useRef<NumberInputHandlers>();
   const { classes } = useStyles();
-  const [isLast, setIsLast] = useState(false);
+  const [isLast, setIsLast] = useState(true);
   const modals = useModals();
   const step = props.step ?? 1;
 
-  const realOnChange = debounce(props.onChange ?? (() => null), 500);
+  const realOnChange = debounce(props.onChange ?? (() => null), 1000);
 
   const onChange = useCallback(
     (value: number) => {

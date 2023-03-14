@@ -1,16 +1,21 @@
 import Link from "next/link";
 import React from "react";
+import { useCollectionOnce } from "react-firebase-hooks/firestore";
 
 import {
   createStyles,
   Navbar,
   NavLink,
+  Text,
   ScrollArea,
   Tooltip,
   useMantineTheme,
+  Divider,
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { IconBriefcase, IconShield } from "@tabler/icons";
+
+import { inventoryConnection } from "~/api/firebase/firestore/inventory";
 
 import { FancyNavButton } from "./FancyNavButton";
 import { LayoutType } from "./types";
@@ -83,6 +88,10 @@ export const GlobalNav: React.FC<GlobalNavProps> = ({ navOpen }) => {
     />
   ));
 
+  const [inventories] = useCollectionOnce(
+    inventoryConnection.allInventoriesQuery()
+  );
+
   return (
     <Navbar hiddenBreakpoint="sm" hidden={!navOpen} width={{ sm: smWidth }}>
       <Navbar.Section className={classes.section}>
@@ -90,22 +99,18 @@ export const GlobalNav: React.FC<GlobalNavProps> = ({ navOpen }) => {
           {navLinks}
         </Tooltip.Group>
       </Navbar.Section>
-      <Navbar.Section
-        grow
-        component={ScrollArea}
-        mx="-xs"
-        px="xs"
-        className={classes.section}
-      >
+      <Navbar.Section grow component={ScrollArea} className={classes.section}>
         {layout !== LayoutType.COMPACT && (
           <>
-            {/* TODO: Make this users actual inventories */}
-            <NavLink href="/inventory" component={Link} label="My first bag" />
-            <NavLink href="/inventory" component={Link} label="My first bag" />
-            <NavLink href="/inventory" component={Link} label="My first bag" />
-            <NavLink href="/inventory" component={Link} label="My first bag" />
-            <NavLink href="/inventory" component={Link} label="My first bag" />
-            <NavLink href="/inventory" component={Link} label="My first bag" />
+            <Divider px="sm" label="Recent Inventories" />
+            {inventories?.docs.map((doc) => (
+              <NavLink
+                key={doc.id}
+                href={`/inventory/${doc.id}`}
+                component={Link}
+                label={<Text>{doc.data().name}</Text>}
+              />
+            ))}
           </>
         )}
       </Navbar.Section>

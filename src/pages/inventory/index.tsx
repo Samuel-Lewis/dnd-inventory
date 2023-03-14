@@ -8,7 +8,6 @@ import { IconPlus } from "@tabler/icons";
 import { inventoryConnection } from "~/api/firebase/firestore/inventory";
 import { LoadingWrapper } from "~/components/LoadingWrapper";
 import { NavButton } from "~/components/NavButton";
-import { useLocalUser } from "~/hooks/useLocalUser";
 
 const useStyles = createStyles(() => ({
   row: {
@@ -17,11 +16,10 @@ const useStyles = createStyles(() => ({
 }));
 
 const InventoryIndexPage: React.FC = () => {
-  const { localUser, isLoading } = useLocalUser();
   const { classes } = useStyles();
 
   const [inventories, inventoriesLoading] = useCollectionOnce(
-    inventoryConnection.ownedInventoriesQuery(localUser?.ref)
+    inventoryConnection.allInventoriesQuery()
   );
 
   return (
@@ -33,14 +31,14 @@ const InventoryIndexPage: React.FC = () => {
             Create
           </NavButton>
         </Group>
-        <LoadingWrapper isLoading={inventoriesLoading || isLoading}>
+        <LoadingWrapper isLoading={inventoriesLoading}>
           <Table verticalSpacing={"xl"}>
             <thead>
               <tr>
                 <th>Name</th>
                 <th>Description</th>
                 <th>Total Items</th>
-                <th>Unique Items</th>
+                {/* <th>Unique Items</th> */}
                 {/* <th>Owner</th> */}
                 {/* <th>Members</th> */}
               </tr>
@@ -59,7 +57,7 @@ const InventoryIndexPage: React.FC = () => {
                   </td>
                   <td>{inventory.data().description}</td>
                   <td>{totalItems}</td>
-                  <td>{inventory.data().items.length}</td>
+                  {/* <td>{inventory.data().items.length}</td> */}
                   {/* <td>inventory.data().owner owner</td> */}
                   {/* <td>{inventory.data().members.length}</td> */}
                 </tr>

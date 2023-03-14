@@ -17,10 +17,6 @@ import {
 
 import { toUniqueSlug } from "@samuel-lewis/utils";
 
-import { DocMeta } from "~/api/models/Meta";
-
-import { newMeta } from "../meta";
-
 export const converter = <
   T extends WithFieldValue<DocumentData>
 >(): FirestoreDataConverter<T> => ({
@@ -39,8 +35,8 @@ export type ConnectionReturn<T> = {
 };
 
 export class FirestoreConnection<T extends WithFieldValue<DocumentData>> {
-  protected collectionRef: CollectionReference<T & DocMeta>;
-  protected converter = converter<T & DocMeta>();
+  protected collectionRef: CollectionReference<T>;
+  protected converter = converter<T>();
 
   constructor(protected fs: Firestore, protected tableKey: string) {
     this.collectionRef = collection(this.fs, this.tableKey).withConverter(
@@ -62,13 +58,10 @@ export class FirestoreConnection<T extends WithFieldValue<DocumentData>> {
         this.tableKey,
         toUniqueSlug(keyHint, { maxLength: 20 })
       ).withConverter(this.converter);
-      await setDoc(nd, {
-        ...item,
-        ...newMeta(),
-      });
+      await setDoc(nd, item);
       return nd;
     }
-    return addDoc(this.collectionRef, { ...item, ...newMeta() });
+    return addDoc(this.collectionRef, item);
   }
 
   public getDoc(key?: string) {
