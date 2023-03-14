@@ -25,6 +25,7 @@ export interface Item {
   owner: UserRef;
   visibility: "public" | "protected" | "private";
   srdRefSlug?: string;
+  srd?: boolean;
   series?: SeriesRef;
   category: ItemCategory;
   weight?: number;

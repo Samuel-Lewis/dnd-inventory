@@ -1,23 +1,18 @@
 import { query, where } from "firebase/firestore";
 
 import { Item } from "~/api/models/Item";
-import { UserRef } from "~/api/models/User";
 
 import { firebase } from "..";
 
 import { ConnectionReturn, FirestoreConnection } from "./connection";
 
 class ItemConnection extends FirestoreConnection<Item> {
-  public publicItemsQuery = (localUserIdRef?: UserRef | null) => {
-    if (!localUserIdRef) {
-      return null;
-    }
+  public systemItemsQuery = () => {
+    return query(this.collectionRef, where("srd", "==", true));
+  };
 
-    return query(
-      this.collectionRef,
-      // where("owner", "==", localUserIdRef),
-      where("visibility", "==", "public")
-    );
+  public publicItemsQuery = () => {
+    return query(this.collectionRef, where("srd", "==", false));
   };
 
   public override create(item: Item) {

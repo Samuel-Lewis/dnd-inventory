@@ -1,22 +1,14 @@
 import React, { useMemo } from "react";
-import { useCollectionOnce } from "react-firebase-hooks/firestore";
 
 import { Title, Stack, Group } from "@mantine/core";
 
-import { itemConnection } from "~/api/firebase/firestore/item";
 import { HydratedInventoryItemEntry } from "~/api/models/Inventory";
 import { ItemIndex } from "~/components/ItemIndex";
 import { NavButton } from "~/components/NavButton";
-import { useLocalUser } from "~/hooks/useLocalUser";
+import { useAvailableItems } from "~/hooks/firestore";
 
 const ItemIndexPage: React.FC = () => {
-  const { localUser } = useLocalUser();
-  const [publicItems] = useCollectionOnce(
-    itemConnection.publicItemsQuery(localUser?.ref ?? null),
-    {
-      getOptions: { source: "cache" },
-    }
-  );
+  const [publicItems, loading] = useAvailableItems();
 
   const transformedItems = useMemo(() => {
     if (!publicItems) {
@@ -40,7 +32,7 @@ const ItemIndexPage: React.FC = () => {
       <Group>
         <NavButton href="/item/create">Create Item</NavButton>
       </Group>
-      <ItemIndex inventoryItems={transformedItems} />
+      <ItemIndex inventoryItems={transformedItems} loading={loading} />
     </Stack>
   );
 };

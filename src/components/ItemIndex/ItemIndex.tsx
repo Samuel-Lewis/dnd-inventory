@@ -1,5 +1,5 @@
 import Fuse from "fuse.js";
-import React, { ComponentProps, useEffect, useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 
 import { Group, ScrollArea, Stack, TextInput } from "@mantine/core";
 
@@ -8,17 +8,20 @@ import { itemConnection } from "~/api/firebase/firestore/item";
 import { HydratedInventoryItemEntry } from "~/api/models/Inventory";
 import { fuseOptions } from "~/lib/fuse";
 
+import { LoadingBlock } from "../LoadingBlock";
+
 import { ItemCard } from "./ItemCard";
 
 export interface ItemIndexProps {
   inventoryItems: HydratedInventoryItemEntry[];
   renderSideElement?: (item: HydratedInventoryItemEntry) => React.ReactNode;
-  maxHeight?: ComponentProps<typeof ScrollArea.Autosize>["maxHeight"];
+  loading?: boolean;
 }
 
 export const ItemIndex: React.FC<ItemIndexProps> = ({
   inventoryItems = [],
   renderSideElement,
+  loading = false,
 }) => {
   const [hydratedItems, setHydratedItems] = React.useState<
     HydratedInventoryItemEntry[]
@@ -73,20 +76,23 @@ export const ItemIndex: React.FC<ItemIndexProps> = ({
           label="Search"
           value={searchTerm}
           onChange={(event) => setSearchTerm(event.currentTarget.value)}
+          disabled={loading}
         />
       </Group>
 
-      <ScrollArea>
-        <Stack spacing={0}>
-          {searchList.map((item) => (
-            <ItemCard
-              inventoryItem={item}
-              key={item.itemRef.id}
-              renderSideElement={renderSideElement}
-            />
-          ))}
-        </Stack>
-      </ScrollArea>
+      <LoadingBlock isLoading={loading}>
+        <ScrollArea>
+          <Stack spacing={0}>
+            {searchList.map((item) => (
+              <ItemCard
+                inventoryItem={item}
+                key={item.itemRef.id}
+                renderSideElement={renderSideElement}
+              />
+            ))}
+          </Stack>
+        </ScrollArea>
+      </LoadingBlock>
     </Stack>
   );
 };

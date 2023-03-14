@@ -6,7 +6,7 @@ import { createStyles, Group, Stack, Table, Title } from "@mantine/core";
 import { IconPlus } from "@tabler/icons";
 
 import { inventoryConnection } from "~/api/firebase/firestore/inventory";
-import { LoadingWrapper } from "~/components/LoadingWrapper";
+import { LoadingBlock } from "~/components/LoadingBlock";
 import { NavButton } from "~/components/NavButton";
 
 const useStyles = createStyles(() => ({
@@ -31,7 +31,7 @@ const InventoryIndexPage: React.FC = () => {
             Create
           </NavButton>
         </Group>
-        <LoadingWrapper isLoading={inventoriesLoading}>
+        <LoadingBlock isLoading={inventoriesLoading}>
           <Table verticalSpacing={"xl"}>
             <thead>
               <tr>
@@ -64,7 +64,7 @@ const InventoryIndexPage: React.FC = () => {
               );
             })}
           </Table>
-        </LoadingWrapper>
+        </LoadingBlock>
       </Stack>
     </>
   );

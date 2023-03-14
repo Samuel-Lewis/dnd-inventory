@@ -5,10 +5,10 @@ import { Group, Text, Tooltip } from "@mantine/core";
 
 import { getValue } from "~/lib/value";
 
-import copperCoin from "../../../public/currency/copper.png";
-import goldCoin from "../../../public/currency/gold.png";
-import platinumCoin from "../../../public/currency/platinum.png";
-import silverCoin from "../../../public/currency/silver.png";
+import copperCoin from "./currency/copper.png";
+import goldCoin from "./currency/gold.png";
+import platinumCoin from "./currency/platinum.png";
+import silverCoin from "./currency/silver.png";
 
 export interface ValueTraitProps {
   value?: number;

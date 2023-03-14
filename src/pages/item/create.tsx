@@ -58,6 +58,7 @@ const ItemCreatePage: React.FC = () => {
         .create({
           ...values,
           owner: localUser.ref,
+          srd: false,
           visibility: "public",
         })
         .then((doc) => router.push(`/item/${doc.id}`))

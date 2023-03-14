@@ -5,15 +5,16 @@
   - [ ] Future proof item.visibility
   - [ ] Future proof item.series
   - [x] Add /item/create screen
-  - [ ] Detail /item/[id] screen
+  - [x] Detail /item/[id] screen
   - [ ] Clean up /user
   - [ ] Clean up home screen
-  - [?] Add bundling for SRD items
+  - [x] Add bundling for SRD items
     - Partially done. Bundling is implemented, but not sure if everything uses the cache correctly
     - Need a query for the non cached items?
   - [x] Fix scrolls
   - [x] Remove DocMeta attached to Docs
   - [x] Fix inventory items being dependent on item ref
+  - [ ] Add overrides for Inventory Items
 
 - Stretch
   - [x] Rarity border frames

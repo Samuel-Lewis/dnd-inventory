@@ -1,16 +1,14 @@
 import React, { useCallback, useMemo } from "react";
-import { useCollection } from "react-firebase-hooks/firestore";
 
 import { Button, Stack, Text } from "@mantine/core";
 import { ContextModalProps, openContextModal } from "@mantine/modals";
 import { OpenContextModal } from "@mantine/modals/lib/context";
 
-import { itemConnection } from "~/api/firebase/firestore/item";
 import {
   HydratedInventoryItemEntry,
   InventoryItemEntry,
 } from "~/api/models/Inventory";
-import { useLocalUser } from "~/hooks/useLocalUser";
+import { useAvailableItems } from "~/hooks/firestore";
 
 import { ItemIndex } from "../ItemIndex";
 
@@ -43,10 +41,7 @@ export const addItemModalFactory = (
 export const AddItemModal: React.FC<
   ContextModalProps<AddItemModalInnerProps>
 > = ({ id, context, innerProps: { onConfirm } }) => {
-  const { localUser } = useLocalUser();
-  const [publicItems] = useCollection(
-    itemConnection.publicItemsQuery(localUser?.ref ?? null)
-  );
+  const [publicItems, loading] = useAvailableItems();
 
   const selectItem = useCallback(
     (item: InventoryItemEntry) => {
@@ -77,6 +72,7 @@ export const AddItemModal: React.FC<
       <Text>All the items! {id}</Text>
       <ItemIndex
         inventoryItems={transformedItems}
+        loading={loading}
         renderSideElement={(i) => (
           <Button onClick={() => selectItem(i)}>Add</Button>
         )}

@@ -2,13 +2,13 @@ import React from "react";
 
 import { Center, Loader } from "@mantine/core";
 
-export interface LoadingWrapperProps {
+export interface LoadingBlockProps {
   isLoading: boolean;
   children?: React.ReactNode;
   height?: number;
 }
 
-export const LoadingWrapper: React.FC<LoadingWrapperProps> = ({
+export const LoadingBlock: React.FC<LoadingBlockProps> = ({
   isLoading,
   height,
   children,
@@ -18,8 +18,8 @@ export const LoadingWrapper: React.FC<LoadingWrapperProps> = ({
   }
 
   return (
-    <Center sx={{ height }}>
-      <Loader size="xl" />
+    <Center sx={{ height }} m="sm">
+      <Loader size="md" />
     </Center>
   );
 };
