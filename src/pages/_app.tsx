@@ -14,7 +14,9 @@ import { RouterTransition } from "~/components/RouterTransition";
 import { colorsOverride } from "~/components/theme/colors";
 
 export default function App(props: AppProps) {
-  const { Component, pageProps } = props;
+  const { Component, pageProps, router } = props;
+
+  const isIndex = router.pathname === "/";
 
   useEffect(() => {
     signInAnonymously(firebase.auth).then((auth) =>
@@ -64,10 +66,17 @@ export default function App(props: AppProps) {
             overflow: "inside",
           }}
         >
-          <Layout>
-            <RouterTransition />
-            <Component {...pageProps} />
-          </Layout>
+          {isIndex ? (
+            <>
+              <RouterTransition />
+              <Component {...pageProps} />
+            </>
+          ) : (
+            <Layout>
+              <RouterTransition />
+              <Component {...pageProps} />
+            </Layout>
+          )}
         </ModalsProvider>
       </ThemeProvider>
     </>
