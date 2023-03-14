@@ -3,11 +3,12 @@ import React from "react";
 
 import { Group, Text, Tooltip } from "@mantine/core";
 
-import copperCoin from "~/../public/currency/copper.png";
-import goldCoin from "~/../public/currency/gold.png";
-import platinumCoin from "~/../public/currency/platinum.png";
-import silverCoin from "~/../public/currency/silver.png";
 import { getValue } from "~/lib/value";
+
+import copperCoin from "../../../public/currency/copper.png";
+import goldCoin from "../../../public/currency/gold.png";
+import platinumCoin from "../../../public/currency/platinum.png";
+import silverCoin from "../../../public/currency/silver.png";
 
 export interface ValueTraitProps {
   value?: number;
