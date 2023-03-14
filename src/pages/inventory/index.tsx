@@ -28,7 +28,7 @@ const InventoryIndexPage: React.FC = () => {
         <Title order={2}>Your Inventories</Title>
         <Group>
           <NavButton href="/inventory/create" leftIcon={<IconPlus />}>
-            Create
+            Create Inventory
           </NavButton>
         </Group>
         <LoadingBlock isLoading={inventoriesLoading}>

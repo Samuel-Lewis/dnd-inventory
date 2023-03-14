@@ -8,10 +8,10 @@ import { ThemeProvider } from "@samuel-lewis/components";
 
 import { firebase } from "~/api/firebase";
 import { userConnection } from "~/api/firebase/firestore/user";
-import { colorsOverride } from "~/components/colors";
 import { Layout } from "~/components/Layout";
 import { AddItemModal, ADD_ITEM_MODAL_KEY } from "~/components/modals";
 import { RouterTransition } from "~/components/RouterTransition";
+import { colorsOverride } from "~/components/theme/colors";
 
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
@@ -41,6 +41,16 @@ export default function App(props: AppProps) {
           white: "#ede4da",
           black: "#353540",
           primaryColor: "red",
+
+          globalStyles: () => ({
+            a: {
+              color: "inherit",
+              textDecoration: "none",
+              ":hover": {
+                textDecoration: "underline",
+              },
+            },
+          }),
         }}
       >
         <ModalsProvider

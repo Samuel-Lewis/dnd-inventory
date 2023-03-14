@@ -1,30 +1,12 @@
 import Link from "next/link";
 import React, { useMemo } from "react";
 
-import {
-  Text,
-  Grid,
-  Group,
-  Stack,
-  Title,
-  Spoiler,
-  createStyles,
-} from "@mantine/core";
+import { Text, Grid, Group, Stack, Title, Spoiler } from "@mantine/core";
 
 import { HydratedInventoryItemEntry } from "~/api/models/Inventory";
 
 import { FancyPaper } from "../FancyPaper";
 import { CategoryTrait, TraitLine } from "../item-traits";
-
-const useStyles = createStyles(() => ({
-  titleLink: {
-    textDecoration: "none",
-    color: "inherit",
-    ":hover": {
-      textDecoration: "underline",
-    },
-  },
-}));
 
 export interface ItemCardProps {
   inventoryItem: HydratedInventoryItemEntry;
@@ -40,7 +22,6 @@ export const ItemCard: React.FC<ItemCardProps> = ({
   const { name, description, rarity, category } =
     inventoryItem.item?.data ?? {};
   const notes = inventoryItem.notes;
-  const { classes } = useStyles();
 
   const rightSide = useMemo(() => {
     if (renderSideElement) {
@@ -55,15 +36,8 @@ export const ItemCard: React.FC<ItemCardProps> = ({
     if (fullSize) {
       return titleText;
     }
-    return (
-      <Link
-        href={`/item/${inventoryItem.itemRef.id}`}
-        className={classes.titleLink}
-      >
-        {titleText}
-      </Link>
-    );
-  }, [classes.titleLink, fullSize, inventoryItem.itemRef.id, name]);
+    return <Link href={`/item/${inventoryItem.itemRef.id}`}>{titleText}</Link>;
+  }, [fullSize, inventoryItem.itemRef.id, name]);
 
   const srdDesc = useMemo(() => {
     const text = (

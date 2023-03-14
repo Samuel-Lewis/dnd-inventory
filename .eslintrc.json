@@ -2,6 +2,7 @@
   "extends": ["samuel-lewis", "next/core-web-vitals"],
   "rules": {
     "import/no-default-export": "off",
-    "import/no-nodejs-modules": "off"
+    "import/no-nodejs-modules": "off",
+    "@next/next/no-img-element": "off"
   }
 }

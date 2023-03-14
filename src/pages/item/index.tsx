@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 
 import { Title, Stack, Group } from "@mantine/core";
+import { IconPlus } from "@tabler/icons";
 
 import { HydratedInventoryItemEntry } from "~/api/models/Inventory";
 import { ItemIndex } from "~/components/ItemIndex";
@@ -30,7 +31,9 @@ const ItemIndexPage: React.FC = () => {
     <Stack sx={{ height: "100%" }}>
       <Title>All Items</Title>
       <Group>
-        <NavButton href="/item/create">Create Item</NavButton>
+        <NavButton href="/item/create" leftIcon={<IconPlus />}>
+          Create Item
+        </NavButton>
       </Group>
       <ItemIndex inventoryItems={transformedItems} loading={loading} />
     </Stack>

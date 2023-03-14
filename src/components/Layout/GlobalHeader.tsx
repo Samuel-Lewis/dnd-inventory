@@ -6,6 +6,8 @@ import { ThemeToggle } from "@samuel-lewis/components";
 
 import { useLocalUser } from "~/hooks/useLocalUser";
 
+import { GlobalTitle } from "../GlobalTitle";
+
 export interface GlobalHeaderProps {
   toggleNavOpened: () => void;
   navOpen: boolean;
@@ -20,8 +22,12 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = ({
   return (
     <Header height={60} p="sm">
       <Group position="apart">
-        <Burger opened={navOpen} onClick={toggleNavOpened} />
-
+        <Group>
+          <Burger opened={navOpen} onClick={toggleNavOpened} />
+          <Link href="/">
+            <GlobalTitle size="1.5rem" />
+          </Link>
+        </Group>
         <Group>
           <ThemeToggle />
           <Skeleton height={40} circle visible={isLoading}>
