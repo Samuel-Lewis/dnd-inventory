@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import { Text, Stack, Group, createStyles, Container } from "@mantine/core";
 
 import { FancyPaper } from "~/components/FancyPaper";
@@ -44,7 +46,7 @@ export default function IndexPage() {
           </Group>
         </Stack>
       </FancyPaper>
-      <img src={HomeParty.src} className={classes.bigImage} alt="" />
+      <Image src={HomeParty.src} className={classes.bigImage} alt="" />
     </Container>
   );
 }
