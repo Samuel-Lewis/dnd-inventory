@@ -18,7 +18,7 @@
 
 - Stretch
   - [x] Rarity border frames
-  - [ ] Virtualise `<ItemIndex>` list
+  - [x] Virtualise `<ItemIndex>` list
   - [ ] Filters and sort for `<ItemIndex>`
   - [ ] Refine light mode colour scheme
   - [ ] Add dnd equip loader as build scripts

@@ -1,11 +1,13 @@
 import { useRouter } from "next/router";
 import React from "react";
-import { useDocument } from "react-firebase-hooks/firestore";
+import { useCollectionOnce, useDocument } from "react-firebase-hooks/firestore";
 
-import { Stack } from "@mantine/core";
+import { Box } from "@mantine/core";
 
+import { inventoryConnection } from "~/api/firebase/firestore/inventory";
 import { itemConnection } from "~/api/firebase/firestore/item";
 import { HydratedInventoryItemEntry } from "~/api/models/Inventory";
+import { InventoryQuickAdd } from "~/components/InventoryQuickAdd";
 import { ItemCard } from "~/components/ItemIndex/ItemCard";
 
 const ItemIdPage: React.FC = () => {
@@ -14,12 +16,11 @@ const ItemIdPage: React.FC = () => {
   const [item, itemLoading, itemError] = useDocument(
     itemConnection.getDoc(id as string)
   );
-  if (typeof id !== "string") {
-    console.error("id is not a string", id);
-    return null;
-  }
+  const [inventories] = useCollectionOnce(
+    inventoryConnection.recentInventoriesQuery()
+  );
 
-  if (itemLoading || itemError) {
+  if (typeof id !== "string" || itemLoading || itemError) {
     return null;
   }
 
@@ -42,10 +43,15 @@ const ItemIdPage: React.FC = () => {
   };
 
   return (
-    <Stack sx={{ height: "100%" }}>
-      {/* TODO: Add renderRight to quick add to inventory */}
-      <ItemCard inventoryItem={inventoryItem} fullSize />
-    </Stack>
+    <Box sx={{ height: "100%" }}>
+      <ItemCard
+        inventoryItem={inventoryItem}
+        fullSize
+        renderSideElement={(item) => (
+          <InventoryQuickAdd item={item} inventories={inventories} />
+        )}
+      />
+    </Box>
   );
 };
 

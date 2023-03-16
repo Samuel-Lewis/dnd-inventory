@@ -1,4 +1,11 @@
-import { query, where, arrayUnion, DocumentSnapshot } from "firebase/firestore";
+import {
+  query,
+  where,
+  arrayUnion,
+  DocumentSnapshot,
+  limit,
+  orderBy,
+} from "firebase/firestore";
 
 import { toUniqueSlug } from "@samuel-lewis/utils";
 
@@ -23,6 +30,14 @@ class InventoryConnection extends FirestoreConnection<Inventory> {
 
   public allInventoriesQuery = () => {
     return this.collectionRef;
+  };
+
+  public recentInventoriesQuery = (requestLimit = 5) => {
+    return query(
+      this.collectionRef,
+      orderBy("name", "desc"),
+      limit(requestLimit)
+    );
   };
 
   public override create(item: Inventory) {

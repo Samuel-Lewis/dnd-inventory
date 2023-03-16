@@ -89,7 +89,7 @@ export const GlobalNav: React.FC<GlobalNavProps> = ({ navOpen }) => {
   ));
 
   const [inventories] = useCollectionOnce(
-    inventoryConnection.allInventoriesQuery()
+    inventoryConnection.recentInventoriesQuery()
   );
 
   return (

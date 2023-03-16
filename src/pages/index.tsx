@@ -46,7 +46,7 @@ export default function IndexPage() {
           </Group>
         </Stack>
       </FancyPaper>
-      <Image src={HomeParty.src} className={classes.bigImage} alt="" />
+      <Image src={HomeParty} className={classes.bigImage} alt="" />
     </Container>
   );
 }

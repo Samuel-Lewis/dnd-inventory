@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React, { useMemo } from "react";
 
-import { Text, Grid, Group, Stack, Title, Spoiler } from "@mantine/core";
+import { Text, Grid, Group, Stack, Title } from "@mantine/core";
 
 import { HydratedInventoryItemEntry } from "~/api/models/Inventory";
 
@@ -39,27 +39,15 @@ export const ItemCard: React.FC<ItemCardProps> = ({
     return <Link href={`/item/${inventoryItem.itemRef.id}`}>{titleText}</Link>;
   }, [fullSize, inventoryItem.itemRef.id, name]);
 
-  const srdDesc = useMemo(() => {
-    const text = (
-      <Stack mt={fullSize ? "sm" : undefined}>
-        {notes && <Text>{notes}</Text>}
-        {description && <Text fs="italic">{description}</Text>}
-      </Stack>
-    );
-
-    if (fullSize) {
-      return text;
-    }
-
-    return (
-      <Spoiler hideLabel="Hide" showLabel="Show" maxHeight={26}>
-        {text}
-      </Spoiler>
-    );
-  }, [description, fullSize, notes]);
-
   return (
-    <FancyPaper rarity={rarity} sx={{ height: fullSize ? "100%" : undefined }}>
+    <FancyPaper
+      rarity={rarity}
+      m={fullSize ? 0 : "xs"}
+      sx={{
+        height: fullSize ? undefined : 150,
+        minHeight: fullSize ? "100%" : 0,
+      }}
+    >
       <Stack spacing={0}>
         <Grid>
           <Grid.Col span={9}>
@@ -80,10 +68,20 @@ export const ItemCard: React.FC<ItemCardProps> = ({
             </Group>
           </Grid.Col>
           <Grid.Col span={3}>
-            <Group spacing="sm">{rightSide}</Group>
+            <Group position="right" spacing="sm">
+              {rightSide}
+            </Group>
           </Grid.Col>
         </Grid>
-        {srdDesc}
+        {/* TODO, make this in a scroll area */}
+        <Stack mt={2} spacing={2}>
+          {notes && <Text lineClamp={fullSize ? undefined : 1}>{notes}</Text>}
+          {description && (
+            <Text fs="italic" lineClamp={fullSize ? undefined : 1}>
+              {description}
+            </Text>
+          )}
+        </Stack>
       </Stack>
     </FancyPaper>
   );

@@ -43,6 +43,7 @@ export default function App(props: AppProps) {
           white: "#ede4da",
           black: "#353540",
           primaryColor: "red",
+          colorScheme: "dark",
 
           globalStyles: () => ({
             a: {

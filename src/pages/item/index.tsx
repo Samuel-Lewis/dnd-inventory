@@ -1,15 +1,21 @@
 import React, { useMemo } from "react";
+import { useCollectionOnce } from "react-firebase-hooks/firestore";
 
 import { Title, Stack, Group } from "@mantine/core";
 import { IconPlus } from "@tabler/icons";
 
+import { inventoryConnection } from "~/api/firebase/firestore/inventory";
 import { HydratedInventoryItemEntry } from "~/api/models/Inventory";
+import { InventoryQuickAdd } from "~/components/InventoryQuickAdd";
 import { ItemIndex } from "~/components/ItemIndex";
 import { NavButton } from "~/components/NavButton";
 import { useAvailableItems } from "~/hooks/firestore";
 
 const ItemIndexPage: React.FC = () => {
   const [publicItems, loading] = useAvailableItems();
+  const [inventories] = useCollectionOnce(
+    inventoryConnection.recentInventoriesQuery()
+  );
 
   const transformedItems = useMemo(() => {
     if (!publicItems) {
@@ -35,7 +41,13 @@ const ItemIndexPage: React.FC = () => {
           Create Item
         </NavButton>
       </Group>
-      <ItemIndex inventoryItems={transformedItems} loading={loading} />
+      <ItemIndex
+        inventoryItems={transformedItems}
+        loading={loading}
+        renderSideElement={(item) => (
+          <InventoryQuickAdd item={item} inventories={inventories} compact />
+        )}
+      />
     </Stack>
   );
 };

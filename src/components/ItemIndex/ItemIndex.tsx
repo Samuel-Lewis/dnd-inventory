@@ -1,7 +1,8 @@
 import Fuse from "fuse.js";
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 
-import { Group, ScrollArea, Stack, TextInput } from "@mantine/core";
+import { Box, Group, ScrollArea, Stack, TextInput } from "@mantine/core";
+import { useVirtualizer } from "@tanstack/react-virtual";
 
 import { nonNull } from "~/api/firebase/firestore/connection";
 import { itemConnection } from "~/api/firebase/firestore/item";
@@ -23,11 +24,12 @@ export const ItemIndex: React.FC<ItemIndexProps> = ({
   renderSideElement,
   loading = false,
 }) => {
+  const parentRef = useRef<HTMLDivElement | null>(null);
   const [hydratedItems, setHydratedItems] = React.useState<
     HydratedInventoryItemEntry[]
   >([]);
 
-  const [searchTerm, setSearchTerm] = React.useState("");
+  const [searchTerm, setSearchTerm] = useState("");
   const fuse = useMemo(
     () => new Fuse(hydratedItems, fuseOptions),
     [hydratedItems]
@@ -69,28 +71,56 @@ export const ItemIndex: React.FC<ItemIndexProps> = ({
     return fuse.search(searchTerm).map((result) => result.item);
   }, [searchTerm, fuse, hydratedItems]);
 
+  const rowVirtualizer = useVirtualizer({
+    count: searchList.length,
+    getScrollElement: () => parentRef.current,
+    estimateSize: () => 165,
+    overscan: 5,
+  });
+
   return (
     <Stack sx={{ flex: "1 0", minHeight: 0, height: "100%" }} spacing="xs">
       <Group grow mx="xs">
         <TextInput
           label="Search"
-          value={searchTerm}
+          defaultValue={searchTerm}
           onChange={(event) => setSearchTerm(event.currentTarget.value)}
           disabled={loading}
         />
       </Group>
 
       <LoadingBlock isLoading={loading}>
-        <ScrollArea>
-          <Stack spacing={0}>
-            {searchList.map((item) => (
-              <ItemCard
-                inventoryItem={item}
-                key={item.itemRef.id}
-                renderSideElement={renderSideElement}
-              />
-            ))}
-          </Stack>
+        <ScrollArea viewportRef={parentRef}>
+          <Box
+            sx={{
+              height: `${rowVirtualizer.getTotalSize()}px`,
+              width: "100%",
+              position: "relative",
+            }}
+          >
+            {rowVirtualizer.getVirtualItems().map((virtualRow) => {
+              const item = searchList[virtualRow.index];
+              return (
+                <Box
+                  key={virtualRow.index}
+                  sx={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: `${virtualRow.size}px`,
+                    transform: `translateY(${virtualRow.start}px)`,
+                  }}
+                >
+                  <ItemCard
+                    inventoryItem={item}
+                    key={item.itemRef.id}
+                    renderSideElement={renderSideElement}
+                  />
+                </Box>
+              );
+            })}
+          </Box>
         </ScrollArea>
       </LoadingBlock>
     </Stack>
