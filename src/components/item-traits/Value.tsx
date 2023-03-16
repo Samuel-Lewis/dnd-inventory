@@ -26,26 +26,26 @@ export const ValueTrait: React.FC<ValueTraitProps> = ({ value }) => {
         {platinum > 0 && (
           <Group spacing={2} noWrap>
             <Text weight={600}>{platinum}</Text>
-            <Image src={platinumCoin.src} width={16} height={16} alt="" />
+            <Image src={platinumCoin} width={16} height={16} alt="" />
           </Group>
         )}
 
         {gold > 0 && (
           <Group spacing={2} noWrap>
             <Text weight={600}>{gold}</Text>
-            <Image src={goldCoin.src} width={16} height={16} alt="" />
+            <Image src={goldCoin} width={16} height={16} alt="" />
           </Group>
         )}
         {silver > 0 && (
           <Group spacing={2} noWrap>
             <Text weight={600}>{silver}</Text>
-            <Image src={silverCoin.src} width={16} height={16} alt="" />
+            <Image src={silverCoin} width={16} height={16} alt="" />
           </Group>
         )}
         {copper > 0 && (
           <Group spacing={2} noWrap>
             <Text weight={600}>{copper}</Text>
-            <Image src={copperCoin.src} width={16} height={16} alt="" />
+            <Image src={copperCoin} width={16} height={16} alt="" />
           </Group>
         )}
       </Group>
