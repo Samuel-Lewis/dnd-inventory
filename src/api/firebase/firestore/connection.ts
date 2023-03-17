@@ -21,7 +21,7 @@ export const converter = <
   T extends WithFieldValue<DocumentData>
 >(): FirestoreDataConverter<T> => ({
   toFirestore: (data: WithFieldValue<T>) => data,
-  fromFirestore: (snap: QueryDocumentSnapshot) => snap.data() as T,
+  fromFirestore: (snap: QueryDocumentSnapshot<T>) => snap.data(),
 });
 
 export const nonNull = <T>(value: T | null | undefined): value is T => {

@@ -28,6 +28,7 @@ export const InventoryQuickAdd: React.FC<InventoryQuickAddProps> = ({
     },
     []
   );
+
   return (
     <Menu shadow="md" width={200} withinPortal>
       <Menu.Target>

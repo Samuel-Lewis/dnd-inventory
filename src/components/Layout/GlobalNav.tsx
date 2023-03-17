@@ -56,7 +56,6 @@ const data = [
 
 /** TODO
  * scroll bar is on outside of scroll area
- * mobile: logout button is not showing
  * mobile: navbar scroll area is not working
  */
 
