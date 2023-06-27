@@ -1,6 +1,6 @@
 # Party Packrat
 
-Preview build is available at: dnd-inventory.vercel.app. This is not ready for full production use at this time, as there is some expected schema changes to the database.
+Preview build is available at: party-packrat.vercel.app. This is not ready for full production use at this time, as there is some expected schema changes to the database.
 
 **Party Packrat** is a pretty simple web app used to track inventories for your tabletop RPG games. A simplified way to create homebrew items and tracks party (or single) inventories for all your campaigns.
 

@@ -1,7 +1,6 @@
 {
-  "name": "dnd-inventory",
+  "name": "party-packrat",
   "version": "0.1.0",
-  "main": "firebaseFunctions.js",
   "private": true,
   "scripts": {
     "dev": "next dev",

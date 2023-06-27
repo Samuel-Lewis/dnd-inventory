@@ -2,7 +2,3 @@
 .vscode
 node_modules
 pnpm-lock.yaml
-.firebase
-.firebase-debug.log
-firebase.json
-firebaseFunctions.js
