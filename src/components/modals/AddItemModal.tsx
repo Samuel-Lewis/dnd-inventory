@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from "react";
 
-import { Button, Stack, Text } from "@mantine/core";
+import { Button, Stack } from "@mantine/core";
 import { ContextModalProps, openContextModal } from "@mantine/modals";
 import { OpenContextModal } from "@mantine/modals/lib/context";
 
@@ -69,7 +69,6 @@ export const AddItemModal: React.FC<
 
   return (
     <Stack sx={{ height: "100%" }}>
-      <Text>All the items! {id}</Text>
       <ItemIndex
         inventoryItems={transformedItems}
         loading={loading}

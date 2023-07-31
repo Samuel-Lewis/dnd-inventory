@@ -1,3 +1,4 @@
+import { setCookie } from "cookies-next";
 import { signInAnonymously } from "firebase/auth";
 import { AppProps } from "next/app";
 import Head from "next/head";
@@ -12,6 +13,7 @@ import { Layout } from "~/components/Layout";
 import { AddItemModal, ADD_ITEM_MODAL_KEY } from "~/components/modals";
 import { RouterTransition } from "~/components/RouterTransition";
 import { colorsOverride } from "~/components/theme/colors";
+import { CookieNames } from "~/cookies";
 
 export default function App(props: AppProps) {
   const { Component, pageProps, router } = props;
@@ -19,17 +21,18 @@ export default function App(props: AppProps) {
   const isIndex = router.pathname === "/";
 
   useEffect(() => {
-    signInAnonymously(firebase.auth).then((auth) =>
+    signInAnonymously(firebase.auth).then((auth) => {
       userConnection.getOrCreateDoc(auth.user.uid, {
         name: "Anonymous",
-      })
-    );
+      });
+      setCookie(CookieNames.USER, auth.user);
+    });
   }, []);
 
   return (
     <>
       <Head>
-        <title>Party Inventory</title>
+        <title>Party Packrat</title>
         <link rel="shortcut icon" href="/favicon.ico" />
         <meta
           name="viewport"
