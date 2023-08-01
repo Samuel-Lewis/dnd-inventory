@@ -19,6 +19,7 @@
     "@mantine/hooks": "^5.10.5",
     "@mantine/modals": "^5.10.5",
     "@mantine/next": "^5.10.5",
+    "@mantine/notifications": "^5.10.5",
     "@mantine/nprogress": "^5.10.5",
     "@samuel-lewis/components": "^0.4.0",
     "@samuel-lewis/utils": "^0.4.0",

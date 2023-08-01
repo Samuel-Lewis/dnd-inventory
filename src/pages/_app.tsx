@@ -5,10 +5,12 @@ import Head from "next/head";
 import { useEffect } from "react";
 
 import { ModalsProvider } from "@mantine/modals";
+import { NotificationsProvider } from "@mantine/notifications";
 import { ThemeProvider } from "@samuel-lewis/components";
 
 import { firebase } from "~/api/firebase";
 import { userConnection } from "~/api/firebase/firestore/user";
+import { ErrorBoundary } from "~/components/ErrorBoundary";
 import { Layout } from "~/components/Layout";
 import { AddItemModal, ADD_ITEM_MODAL_KEY } from "~/components/modals";
 import { RouterTransition } from "~/components/RouterTransition";
@@ -59,29 +61,35 @@ export default function App(props: AppProps) {
           }),
         }}
       >
-        <ModalsProvider
-          modals={{ [ADD_ITEM_MODAL_KEY]: AddItemModal }}
-          modalProps={{
-            size: "xl",
-            transition: "fade",
-            centered: true,
-            closeOnClickOutside: false,
-            exitTransitionDuration: 200,
-            overflow: "inside",
-          }}
-        >
-          {isIndex ? (
-            <>
-              <RouterTransition />
-              <Component {...pageProps} />
-            </>
-          ) : (
-            <Layout>
-              <RouterTransition />
-              <Component {...pageProps} />
-            </Layout>
-          )}
-        </ModalsProvider>
+        <NotificationsProvider>
+          <ErrorBoundary>
+            <ModalsProvider
+              modals={{ [ADD_ITEM_MODAL_KEY]: AddItemModal }}
+              modalProps={{
+                size: "xl",
+                transition: "fade",
+                centered: true,
+                closeOnClickOutside: false,
+                exitTransitionDuration: 200,
+                overflow: "inside",
+              }}
+            >
+              {isIndex ? (
+                <>
+                  <RouterTransition />
+                  <Component {...pageProps} />
+                </>
+              ) : (
+                <Layout>
+                  <ErrorBoundary>
+                    <RouterTransition />
+                    <Component {...pageProps} />
+                  </ErrorBoundary>
+                </Layout>
+              )}
+            </ModalsProvider>
+          </ErrorBoundary>
+        </NotificationsProvider>
       </ThemeProvider>
     </>
   );
