@@ -202,4 +202,4 @@ export const itemCategories = {
     name: "Wondrous Items",
     Icon: WondrousItems,
   },
-};
+} as const;

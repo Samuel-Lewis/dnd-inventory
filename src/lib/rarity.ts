@@ -1,4 +1,4 @@
-import { Rarity } from "~/api/models/Item";
+import { Rarity } from "~/api/models/common";
 
 export const rarityToColor: Record<Rarity, string> = {
   varies: "gray",

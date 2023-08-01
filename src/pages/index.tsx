@@ -1,13 +1,4 @@
-import axios from "axios";
-
-import {
-  Text,
-  Stack,
-  Group,
-  createStyles,
-  Container,
-  Button,
-} from "@mantine/core";
+import { Text, Stack, Group, createStyles, Container } from "@mantine/core";
 
 import { FancyPaper } from "~/components/FancyPaper";
 import { GlobalTitle } from "~/components/GlobalTitle";
@@ -33,13 +24,6 @@ const useStyles = createStyles(() => ({
 export default function IndexPage() {
   const { classes } = useStyles();
 
-  const a = () => {
-    axios
-      .get("/api/item/create")
-      .then((a) => console.log(a))
-      .catch((e) => console.error(e));
-  };
-
   return (
     <Container className={classes.frame}>
       <FancyPaper rarity="uncommon" m="xl">
@@ -58,7 +42,6 @@ export default function IndexPage() {
           <Group>
             <NavButton href="/item">Items</NavButton>
             <NavButton href="/inventory">Inventories</NavButton>
-            <Button onClick={a}>Inventories</Button>
           </Group>
         </Stack>
       </FancyPaper>

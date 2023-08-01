@@ -15,6 +15,7 @@ import { useForm, zodResolver } from "@mantine/form";
 
 import { itemConnection } from "~/api/firebase/firestore/item";
 import { Item } from "~/api/models/Item";
+import { FancyPaper } from "~/components/FancyPaper";
 import { CategorySelect, RaritySelect } from "~/components/form-traits";
 import { useLocalUser } from "~/hooks/useLocalUser";
 
@@ -55,56 +56,60 @@ const ItemCreatePage: React.FC = () => {
       }
       setFormSubmitting(true);
       itemConnection
-        .create({
+        .createByApi({
           ...values,
-          owner: localUser.ref,
+          ownerRef: localUser.ref,
           srd: false,
           visibility: "public",
         })
-        .then((doc) => router.push(`/item/${doc.id}`))
+        .then((response) => router.push(`/item/${response.data.id}`))
         .finally(() => setFormSubmitting(false));
     },
     [isError, isLoading, localUser, router]
   );
 
   return (
-    <Stack>
-      <Title order={2}>New Inventory</Title>
-      <form onSubmit={form.onSubmit(handleFormSubmit)}>
-        <Stack>
-          <TextInput
-            disabled={formSubmitting}
-            label="Item name"
-            required
-            {...form.getInputProps("name")}
-          />
-
-          <CategorySelect
-            label="Category"
-            required
-            {...form.getInputProps("category")}
-          />
-
-          <Group grow>
-            <RaritySelect label="Rarity" {...form.getInputProps("rarity")} />
-            <NumberInput label="Value (cp)" {...form.getInputProps("value")} />
-            <NumberInput
-              label="Weight (lbs)"
-              {...form.getInputProps("weight")}
+    <Stack sx={{ height: "100%" }}>
+      <Title order={2}>New Item</Title>
+      <FancyPaper rarity={form.values.rarity} sx={{ height: "100%" }}>
+        <form onSubmit={form.onSubmit(handleFormSubmit)}>
+          <Stack>
+            <TextInput
+              disabled={formSubmitting}
+              label="Name"
+              required
+              {...form.getInputProps("name")}
             />
-          </Group>
 
-          <Textarea
-            disabled={formSubmitting}
-            label="Description"
-            {...form.getInputProps("description")}
-          />
+            <CategorySelect
+              label="Category"
+              required
+              {...form.getInputProps("category")}
+            />
 
-          <Button loading={formSubmitting} type="submit">
-            Create
-          </Button>
-        </Stack>
-      </form>
+            <Group grow>
+              <RaritySelect label="Rarity" {...form.getInputProps("rarity")} />
+              <NumberInput
+                label="Value (cp)"
+                {...form.getInputProps("value")}
+              />
+              <NumberInput
+                label="Weight (lbs)"
+                {...form.getInputProps("weight")}
+              />
+            </Group>
+
+            <Textarea
+              disabled={formSubmitting}
+              label="Description"
+              {...form.getInputProps("description")}
+            />
+            <Button loading={formSubmitting} type="submit">
+              Create
+            </Button>
+          </Stack>
+        </form>
+      </FancyPaper>
     </Stack>
   );
 };
