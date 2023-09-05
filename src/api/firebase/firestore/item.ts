@@ -1,7 +1,6 @@
-import axios from "axios";
 import { query, where } from "firebase/firestore";
 
-import { Item, ItemRef, ItemTableKey } from "~/api/models/Item";
+import { Item, ItemTableKey } from "~/api/models/Item";
 
 import { firebase } from "..";
 
@@ -19,11 +18,6 @@ class ItemConnection extends FirestoreConnection<Item> {
   public override async create(item: Item) {
     const keyHint = item.name;
     return super.create(item, keyHint);
-  }
-
-  public async createByApi(item: Item) {
-    const response = await axios.post<ItemRef>("/api/item/create", item);
-    return response;
   }
 }
 

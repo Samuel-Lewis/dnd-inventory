@@ -1,7 +1,5 @@
 import React from "react";
 
-import { showNotification } from "@mantine/notifications";
-
 type ErrorBoundaryProps = {
   children: React.ReactNode;
 };
@@ -30,10 +28,11 @@ export class ErrorBoundary extends React.Component<
 
   render() {
     if (this.state.error) {
-      showNotification({
-        title: "Oops, there is an error!",
-        message: this.state.error.message,
-      });
+      //   showNotification({
+      //     title: "Oops, there is an error!",
+      //     message: this.state.error.message,
+      //   });
+      console.error(this.state.error);
     }
 
     return this.props.children;

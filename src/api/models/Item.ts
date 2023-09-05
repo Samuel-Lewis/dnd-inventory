@@ -24,13 +24,12 @@ export const ItemSchema = z.object({
   rarity: RarityEnum,
   category: ItemCategoryEnum,
   ownerRef: UserRefSchema,
-  series: SeriesRefSchema.optional(),
+  seriesRef: SeriesRefSchema.optional(),
 });
 
 export type Item = z.infer<typeof ItemSchema>;
 export type ItemKey = string;
 export type ItemRef = DocumentReference<Item>;
+// TODO: Some circular dependency issue here??
+// export const ItemRefSchema = referenceSchemaFactory<Item>(itemConnection);
 export const ItemTableKey = "items";
-export const ItemRefSchema = z.custom<ItemRef>((v) => {
-  return v instanceof DocumentReference<Item>;
-});

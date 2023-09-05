@@ -38,7 +38,7 @@ export class FirestoreConnection<T extends WithFieldValue<DocumentData>> {
   protected collectionRef: CollectionReference<T>;
   protected converter = converter<T>();
 
-  constructor(protected fs: Firestore, protected tableKey: string) {
+  constructor(protected fs: Firestore, public readonly tableKey: string) {
     this.collectionRef = collection(this.fs, this.tableKey).withConverter(
       this.converter
     );
@@ -69,6 +69,17 @@ export class FirestoreConnection<T extends WithFieldValue<DocumentData>> {
       return null;
     }
     return doc(this.fs, this.tableKey, key).withConverter(this.converter);
+  }
+
+  public pathToReference(path: string): DocumentReference<T> {
+    if (!path.startsWith(this.tableKey)) {
+      console.warn("Path does not start with table key", {
+        path,
+        tableKey: this.tableKey,
+      });
+    }
+
+    return doc(this.fs, path).withConverter(this.converter);
   }
 
   public async getDocValue(key: string): Promise<ConnectionReturn<T> | null> {

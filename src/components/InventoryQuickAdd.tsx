@@ -45,7 +45,6 @@ export const InventoryQuickAdd: React.FC<InventoryQuickAddProps> = ({
             Quick add
           </Button>
         )}
-        {/*  */}
       </Menu.Target>
 
       <Menu.Dropdown>

@@ -32,8 +32,8 @@ export default function IndexPage() {
           <Text>
             <b>Party Packrat</b> is a pretty simple web app used to track
             inventories for your tabletop RPG games. A simplified way to create
-            homebrew items and tracks party (or single) inventories for all your
-            campaigns.
+            homebrew items and tracks party (or individual) inventories for all
+            your campaigns.
           </Text>
           <Text>
             This is predominately designed for Dungeons and Dragons 5th Edition,

@@ -20,6 +20,6 @@ export interface Inventory {
   name: string;
   description?: string;
   items: InventoryItemEntry[];
-  owner: UserRef;
-  members: UserRef[];
+  ownerRef: UserRef;
+  membersRef: UserRef[];
 }

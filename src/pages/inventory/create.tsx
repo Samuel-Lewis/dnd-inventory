@@ -37,8 +37,8 @@ const InventoryCreatePage: React.FC = () => {
         .create({
           ...values,
           items: [],
-          owner: localUser.ref,
-          members: [localUser.ref],
+          ownerRef: localUser.ref,
+          membersRef: [localUser.ref],
         })
         .then((doc) => router.push(`/inventory/${doc.id}`))
         .finally(() => setFormSubmitting(false));

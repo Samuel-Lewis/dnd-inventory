@@ -55,14 +55,17 @@ const ItemCreatePage: React.FC = () => {
         return;
       }
       setFormSubmitting(true);
+
       itemConnection
-        .createByApi({
+        .create({
           ...values,
           ownerRef: localUser.ref,
           srd: false,
           visibility: "public",
         })
-        .then((response) => router.push(`/item/${response.data.id}`))
+        .then((response) => {
+          router.push(`/item/${response.id}`);
+        })
         .finally(() => setFormSubmitting(false));
     },
     [isError, isLoading, localUser, router]
