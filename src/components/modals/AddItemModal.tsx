@@ -41,41 +41,42 @@ export const addItemModalFactory = (
 export const AddItemModal: React.FC<
   ContextModalProps<AddItemModalInnerProps>
 > = ({ id, context, innerProps: { onConfirm } }) => {
-  const [publicItems, loading] = useAvailableItems();
+  // const [publicItems, loading] = useAvailableItems();
 
-  const selectItem = useCallback(
-    (item: InventoryItemEntry) => {
-      onConfirm([item]);
-      context.closeModal(id);
-    },
-    [onConfirm, context, id]
-  );
+  // const selectItem = useCallback(
+  //   (item: InventoryItemEntry) => {
+  //     onConfirm([item]);
+  //     context.closeModal(id);
+  //   },
+  //   [onConfirm, context, id]
+  // );
 
-  const transformedItems = useMemo(() => {
-    if (!publicItems) {
-      return [];
-    }
+  // const transformedItems = useMemo(() => {
+  //   if (!publicItems) {
+  //     return [];
+  //   }
 
-    return publicItems.docs.map((doc) => {
-      const data = doc.data();
-      const t: HydratedInventoryItemEntry = {
-        item: { ref: doc.ref, data, snap: doc },
-        itemRef: doc.ref,
-        quantity: -1,
-      };
-      return t;
-    });
-  }, [publicItems]);
+  //   return publicItems.docs.map((doc) => {
+  //     const data = doc.data();
+  //     const t: HydratedInventoryItemEntry = {
+  //       item: { ref: doc.ref, data, snap: doc },
+  //       itemRef: doc.ref,
+  //       quantity: -1,
+  //     };
+  //     return t;
+  //   });
+  // }, [publicItems]);
 
   return (
     <Stack sx={{ height: "100%" }}>
-      <ItemIndex
+      {/* <ItemIndex
         inventoryItems={transformedItems}
         loading={loading}
         renderSideElement={(i) => (
           <Button onClick={() => selectItem(i)}>Add</Button>
         )}
-      />
+      /> */}
+      nope
     </Stack>
   );
 };

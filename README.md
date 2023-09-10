@@ -10,7 +10,7 @@ This is predominately designed for Dungeons and Dragons 5th Edition, and has som
 
 Party Packrat is built with Typescript and React, using the NextJS framework and Vercel for site hosting. The authentication and database is with Google's Firebase.
 
-### TODO
+## TODO
 
 - Before release
 

@@ -12,6 +12,8 @@
     "generate:borders": "svgr --out-dir src/lib/category/borders --filename-case kebab --typescript --no-dimensions --prettier-config .prettier.js -- assets/borders"
   },
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.409.0",
+    "@aws-sdk/lib-dynamodb": "^3.409.0",
     "@emotion/react": "^11.11.1",
     "@emotion/server": "^11.11.0",
     "@mantine/core": "^5.10.5",
@@ -31,6 +33,7 @@
     "firebase-admin": "^11.10.1",
     "fuse.js": "^6.6.2",
     "lodash.debounce": "^4.0.8",
+    "nanoid": "^4.0.2",
     "next": "13.2.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
